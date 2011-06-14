@@ -33,9 +33,21 @@ public class Letter extends RShape {
 		return tPoints;
 	}
 	public RPoint getBottomRightWorld(){
-		return new RPoint(getBottomRight().x+wX, getBottomRight().y+wY); 
+		RPoint r;
+		if(letter.equals(" ")){
+			r = new RPoint(Core.p5.whiteSpaceWidth+wX, Core.p5.whiteSpaceHeight+wY);
+		}else{
+			r = new RPoint(getBottomRight().x+wX, getBottomRight().y+wY);
+		}
+		return r;
 	}
 	public RPoint getBottomLeftWorld(){
-		return new RPoint(getBottomLeft().x+wX, getBottomRight().y+wY); 
+		RPoint r;
+		if(letter.equals(" ")){
+			r = new RPoint(0+wX, Core.p5.whiteSpaceHeight+wY);
+		}else{
+			r = new RPoint(getBottomLeft().x+wX, getBottomLeft().y+wY);
+		}
+		return r;  
 	}
 }
