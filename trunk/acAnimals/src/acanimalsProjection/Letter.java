@@ -1,4 +1,4 @@
-package acanimals;
+package acanimalsProjection;
 
 import java.util.Iterator;
 

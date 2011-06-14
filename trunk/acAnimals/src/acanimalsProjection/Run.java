@@ -1,4 +1,4 @@
-package acanimals;
+package acanimalsProjection;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,8 +52,8 @@ public class Run extends PApplet {
 		 alphabet.put("d", new Letter("d"));
 		 alphabet.put(" ", new Letter("space"));
 		 createPoints(displayMsg);
-		 //setupAnimals();
-		 //startDraw();
+		 setupAnimals();
+		 startDraw();
 	}
 
 	public void draw() {

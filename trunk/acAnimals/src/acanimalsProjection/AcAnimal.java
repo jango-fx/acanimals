@@ -1,4 +1,4 @@
-package acanimals;
+package acanimalsProjection;
 
 import processing.core.PApplet;
 import processing.core.PVector;
