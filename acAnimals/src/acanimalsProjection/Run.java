@@ -22,6 +22,8 @@ public class Run extends PApplet {
 	int resolution = 20;		// lower -> higher resolution
 	float letterScale = 1.3f;
 	float animalSize = 10;
+	float whiteSpaceWidth = 20;
+	float whiteSpaceHeight = 20;
 	ArrayList<AcAnimal> animals = new ArrayList<AcAnimal>();
 	ArrayList<AcAnimal> movingAnimals = new ArrayList<AcAnimal>();
 	ArrayList<String> displayMsg = new ArrayList<String>();
