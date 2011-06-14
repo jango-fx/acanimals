@@ -14,9 +14,11 @@ public class Letter extends RShape {
 	String letter;
 	
 	public Letter (String l){
-		super(RG.loadShape("../data/alphabet/"+l+".svg"));
+		super(Core.p5.alphabet.get(l));
+//		PApplet.println(this.getPoints());
 		this.scale(Core.p5.letterScale);
 		letter = l;
+		PApplet.println(l);
 	}
 	
 	public RPoint[] getWorldPoints(){
