@@ -21,18 +21,20 @@ public class Run extends PApplet {
 	int ySpace = 10;
 	int resolution = 20;		// lower -> higher resolution
 	float letterScale = 1.3f;
-	float animalSize = 10;
-	float whiteSpaceWidth = 20;
-	float whiteSpaceHeight = 20;
+	float animalSize = 10f;
+	float whiteSpaceWidth = 30f;
+	float whiteSpaceHeight = 20f;
+	int lineHeight = 140;
 	ArrayList<AcAnimal> animals = new ArrayList<AcAnimal>();
 	ArrayList<AcAnimal> movingAnimals = new ArrayList<AcAnimal>();
 	ArrayList<String> displayMsg = new ArrayList<String>();
-	int animalCnt = 300;
+	int animalCnt = 250;
 	Timer nextTimer = new Timer();
 	
 	
-	String message = "ab ccdabcda a a a a dd abcd";
-	HashMap<String, Letter> alphabet = new HashMap<String, Letter>();
+	String message = "abcd bcdabada";
+	
+	HashMap<String, RShape> alphabet = new HashMap<String, RShape>();
 	
 	public void setup() {
 		size(1024,758,OPENGL);
@@ -46,13 +48,13 @@ public class Run extends PApplet {
 		 displayMsg = msgToLines(message);
 		 for (Iterator<String> iterator = displayMsg.iterator(); iterator.hasNext();) {
 			println(iterator.next());
-		}
+		 }
 		 
-		 alphabet.put("a", new Letter("a"));
-		 alphabet.put("b", new Letter("b"));
-		 alphabet.put("c", new Letter("c"));
-		 alphabet.put("d", new Letter("d"));
-		 alphabet.put(" ", new Letter("space"));
+		 for(char ch='a'; ch<='d'; ch++){
+			 alphabet.put(String.valueOf(ch), new RShape(RG.loadShape("../data/alphabet/"+String.valueOf(ch)+".svg")));	 
+		 }
+		 alphabet.put(" ", new RShape(RG.loadShape("../data/alphabet/space.svg")));
+		 
 		 createPoints(displayMsg);
 		 setupAnimals();
 		 startDraw();
@@ -80,19 +82,18 @@ public class Run extends PApplet {
 	private void createPoints(ArrayList<String> msg){
 		int cnt = 0;
 		for (Iterator<String> iterator = msg.iterator(); iterator.hasNext();) {
-			cnt++;
 			String line = iterator.next();
 			String[] c = line.split("");
 			ArrayList<String> chars = new ArrayList<String>();
 			Collections.addAll(chars, c); 
 			chars.remove(0);
 			ArrayList<Letter> messageLetters = new ArrayList<Letter>();
+			println("line: "+cnt);
 			for (Iterator<String> i = chars.iterator(); i.hasNext();) {
 				String s = i.next();
-				messageLetters.add(alphabet.get(s));
-//				println(messageLetters.get(messageLetters.size()-1));
+				// letters are created
+				messageLetters.add(new Letter(s));
 			}
-			
 			for (int i = 0; i < messageLetters.size(); i++) {
 				if(messageLetters.get(i)!=null){
 					if(i!=0){
@@ -103,14 +104,13 @@ public class Run extends PApplet {
 							messageLetters.get(i).wX = (int)messageLetters.get(i-2).getBottomRightWorld().x+xSpace;
 						}
 					}
+					// line move y
+					messageLetters.get(i).wY = (cnt)*lineHeight;
+					// add all Points for positions
 					points.addAll(Arrays.asList(messageLetters.get(i).getWorldPoints()));
 				}
 			}
-//			if(messageLetters.get(cnt)!=null){
-//				if(cnt!=0){
-//					messageLetters.get(cnt).wY = (int)messageLetters.get(cnt-1).getBottomLeftWorld().y+ySpace;
-//				}
-//			}
+			cnt++;
 		}
 				
 		
