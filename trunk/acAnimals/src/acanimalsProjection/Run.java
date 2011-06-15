@@ -39,7 +39,7 @@ public class Run extends PApplet {
 	public void setup() {
 		size(1024,758,OPENGL);
 		
-		Core.p5 =this;
+		Core.p5 = this;
 		
 		 RG.init(this);
 		 RG.setPolygonizer(RG.UNIFORMLENGTH);
