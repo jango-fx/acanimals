@@ -28,11 +28,11 @@ public class Run extends PApplet {
 	ArrayList<AcAnimal> animals = new ArrayList<AcAnimal>();
 	ArrayList<AcAnimal> movingAnimals = new ArrayList<AcAnimal>();
 	ArrayList<String> displayMsg = new ArrayList<String>();
-	int animalCnt = 250;
+	int animalCnt = 270;
 	Timer nextTimer = new Timer();
 	
 	
-	String message = "abcd bcdabada";
+	String message = "sommerfest 2011";
 	
 	HashMap<String, RShape> alphabet = new HashMap<String, RShape>();
 	
@@ -50,8 +50,11 @@ public class Run extends PApplet {
 			println(iterator.next());
 		 }
 		 
-		 for(char ch='a'; ch<='d'; ch++){
+		 for(char ch='a'; ch<='z'; ch++){
 			 alphabet.put(String.valueOf(ch), new RShape(RG.loadShape("../data/alphabet/"+String.valueOf(ch)+".svg")));	 
+		 }
+		 for(int num=0; num<=9; num++){
+			 alphabet.put(String.valueOf(num), new RShape(RG.loadShape("../data/alphabet/"+String.valueOf(num)+".svg")));	 
 		 }
 		 alphabet.put(" ", new RShape(RG.loadShape("../data/alphabet/space.svg")));
 		 
