@@ -16,6 +16,8 @@ import processing.core.PVector;
 
 
 public class Run extends PApplet {
+	Boolean debug = true;
+	
 	ArrayList<RPoint> points = new ArrayList<RPoint>();
 	int xSpace = 10;
 	int ySpace = 10;
@@ -28,11 +30,13 @@ public class Run extends PApplet {
 	ArrayList<AcAnimal> animals = new ArrayList<AcAnimal>();
 	ArrayList<AcAnimal> movingAnimals = new ArrayList<AcAnimal>();
 	ArrayList<String> displayMsg = new ArrayList<String>();
-	int animalCnt = 270;
+	int animalCnt = 100;
 	Timer nextTimer = new Timer();
+	Boolean gotoText = true;
+	int msgPos = 0;
 	
-	
-	String message = "sommerfest 2011";
+	ArrayList<String> messageList = new ArrayList<String>();
+	//String message;
 	
 	HashMap<String, RShape> alphabet = new HashMap<String, RShape>();
 	
@@ -45,11 +49,17 @@ public class Run extends PApplet {
 		 RG.setPolygonizer(RG.UNIFORMLENGTH);
 		 RG.setPolygonizerLength(resolution);
 		 
-		 displayMsg = msgToLines(message);
-		 for (Iterator<String> iterator = displayMsg.iterator(); iterator.hasNext();) {
-			println(iterator.next());
-		 }
+		 messageList.add("tierchen");
+		 messageList.add("sommer");
+		 messageList.add("monster");
+		 messageList.add("artcom party animals");
 		 
+		 
+//		 for (Iterator<String> iterator = displayMsg.iterator(); iterator.hasNext();) {
+//			println(iterator.next());
+//		 }
+//		 
+		 // buchstaben laden
 		 for(char ch='a'; ch<='z'; ch++){
 			 alphabet.put(String.valueOf(ch), new RShape(RG.loadShape("../data/alphabet/"+String.valueOf(ch)+".svg")));	 
 		 }
@@ -57,32 +67,46 @@ public class Run extends PApplet {
 			 alphabet.put(String.valueOf(num), new RShape(RG.loadShape("../data/alphabet/"+String.valueOf(num)+".svg")));	 
 		 }
 		 alphabet.put(" ", new RShape(RG.loadShape("../data/alphabet/space.svg")));
+		 alphabet.put("!", new RShape(RG.loadShape("../data/alphabet/ausrufezeichen.svg")));
+		 alphabet.put("?", new RShape(RG.loadShape("../data/alphabet/fragezeichen.svg")));
+		 alphabet.put(",", new RShape(RG.loadShape("../data/alphabet/komma.svg")));
+		 alphabet.put(".", new RShape(RG.loadShape("../data/alphabet/punkt.svg")));
 		 
-		 createPoints(displayMsg);
 		 setupAnimals();
-		 startDraw();
+		 
+		 createMessage(messageList.get(msgPos));
 	}
 
 	public void draw() {
-		background(255);
+		background(0x1BBBE9);
 
 		fill(0);
 	    stroke(0);
+	    if(debug){
 	    for(int i=0; i<points.size(); i++){
 	        ellipse(points.get(i).x, points.get(i).y,5,5);  
 	      }
+	    }
 	    for (Iterator<AcAnimal> i = animals.iterator(); i.hasNext();) {
 			AcAnimal ac =  i.next();
 			ac.update();
 			ac.draw();
 		}
 	    if(movingAnimals.isEmpty()){
-//	    	println("ready!");
+	    	println("ready!");
 	    	nextTimer.schedule(new NextMsg(), 1000);
 	    }
 	}
 	
+	private void createMessage(String s){
+		println("message create");
+		displayMsg = msgToLines(s);
+		createPoints(displayMsg);
+		startDraw();
+	}
+	
 	private void createPoints(ArrayList<String> msg){
+		points.clear();
 		int cnt = 0;
 		for (Iterator<String> iterator = msg.iterator(); iterator.hasNext();) {
 			String line = iterator.next();
@@ -130,7 +154,7 @@ public class Run extends PApplet {
 		for (int i = 0; i < points.size(); i++) {
 			if(i<animals.size()-1){
 				animals.get(i).setTarget(Core.RPointToPVector(points.get(i)));
-				movingAnimals.add(animals.get(i));
+//				movingAnimals.add(animals.get(i));
 			}else{
 				break;
 			}
@@ -162,10 +186,26 @@ public class Run extends PApplet {
 	
 	
 	public void nextMsg(){
-	//	println("next Msg");
+		gotoText=!gotoText;
+		if(gotoText){
+			if(msgPos<messageList.size()-2){
+				msgPos++;
+				}else{
+					msgPos=0;
+				}
+			
+			createMessage(messageList.get(msgPos));
+		}else{
+			for (Iterator<AcAnimal> iterator = animals.iterator(); iterator.hasNext();) {
+				AcAnimal a = iterator.next();
+				a.setTarget(new PVector(random(width), random(height)));
+			}
+		}
 	}
 	
-	
+	public void addMovingAnimal(AcAnimal a){
+		movingAnimals.add(a);
+	}
 	public void removeMovingAnimal(AcAnimal a){
 		movingAnimals.remove(a);
 	}
