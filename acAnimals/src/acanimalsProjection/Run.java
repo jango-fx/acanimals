@@ -39,6 +39,8 @@ public class Run extends PApplet {
 	//String message;
 	
 	HashMap<String, RShape> alphabet = new HashMap<String, RShape>();
+
+	private boolean drawFinish = false;
 	
 	public void setup() {
 		size(1024,758,OPENGL);
@@ -92,8 +94,11 @@ public class Run extends PApplet {
 			ac.update();
 			ac.draw();
 		}
-	    if(movingAnimals.isEmpty()){
-	    	println("ready!");
+	    if(movingAnimals.isEmpty() && drawFinish==false){
+	    	drawFinish = true;
+	    }
+	    if(drawFinish){
+//	    	drawFinish=false;
 	    	nextTimer.schedule(new NextMsg(), 1000);
 	    }
 	}
@@ -151,6 +156,7 @@ public class Run extends PApplet {
 	}
 	
 	private void startDraw(){
+		drawFinish = false;
 		for (int i = 0; i < points.size(); i++) {
 			if(i<animals.size()-1){
 				animals.get(i).setTarget(Core.RPointToPVector(points.get(i)));
@@ -186,6 +192,7 @@ public class Run extends PApplet {
 	
 	
 	public void nextMsg(){
+		println("nextMsg");
 		gotoText=!gotoText;
 		if(gotoText){
 			if(msgPos<messageList.size()-2){
