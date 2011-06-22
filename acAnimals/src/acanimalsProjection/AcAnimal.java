@@ -14,8 +14,8 @@ public class AcAnimal {
 	private PVector target = new PVector();
 	private PVector dir = new PVector();
 	float size = Core.p5.animalSize;
-	private float speed = 3;
-	private float arriveDist = 2;
+	private float speed = 5;
+	private float arriveDist = speed-1;
 	private RShape gfx;
 	
 	public AcAnimal(PVector loc){
