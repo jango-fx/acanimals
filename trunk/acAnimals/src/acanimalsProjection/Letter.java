@@ -18,7 +18,6 @@ public class Letter extends RShape {
 //		PApplet.println(this.getPoints());
 		this.scale(Core.p5.letterScale);
 		letter = l;
-		PApplet.println(l);
 	}
 	
 	public RPoint[] getWorldPoints(){

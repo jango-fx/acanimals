@@ -30,10 +30,10 @@ public class Run extends PApplet {
 	ArrayList<AcAnimal> animals = new ArrayList<AcAnimal>();
 	ArrayList<AcAnimal> movingAnimals = new ArrayList<AcAnimal>();
 	ArrayList<String> displayMsg = new ArrayList<String>();
-	int animalCnt = 100;
+	int animalCnt = 200;
 	Timer nextTimer = new Timer();
 	Boolean gotoText = true;
-	int msgPos = 0;
+	int msgPos = -1;
 	
 	ArrayList<String> messageList = new ArrayList<String>();
 	//String message;
@@ -41,6 +41,7 @@ public class Run extends PApplet {
 	HashMap<String, RShape> alphabet = new HashMap<String, RShape>();
 
 	private boolean drawFinish = false;
+	private boolean waiting = false;
 	
 	public void setup() {
 		size(1024,758,OPENGL);
@@ -51,10 +52,10 @@ public class Run extends PApplet {
 		 RG.setPolygonizer(RG.UNIFORMLENGTH);
 		 RG.setPolygonizerLength(resolution);
 		 
-		 messageList.add("tierchen");
-		 messageList.add("sommer");
-		 messageList.add("monster");
-		 messageList.add("artcom party animals");
+		 messageList.add("abcdefghij");
+//		 messageList.add("a");
+		 messageList.add("klmnopqrst");
+		 messageList.add("uvwxyz");
 		 
 		 
 //		 for (Iterator<String> iterator = displayMsg.iterator(); iterator.hasNext();) {
@@ -76,7 +77,7 @@ public class Run extends PApplet {
 		 
 		 setupAnimals();
 		 
-		 createMessage(messageList.get(msgPos));
+//		 createMessage(messageList.get(msgPos));
 	}
 
 	public void draw() {
@@ -94,11 +95,11 @@ public class Run extends PApplet {
 			ac.update();
 			ac.draw();
 		}
-	    if(movingAnimals.isEmpty() && drawFinish==false){
+	    if(movingAnimals.isEmpty() && drawFinish==false && !waiting){
 	    	drawFinish = true;
 	    }
-	    if(drawFinish){
-//	    	drawFinish=false;
+	    if(drawFinish && !waiting){
+	    	waiting=true;
 	    	nextTimer.schedule(new NextMsg(), 1000);
 	    }
 	}
@@ -160,7 +161,6 @@ public class Run extends PApplet {
 		for (int i = 0; i < points.size(); i++) {
 			if(i<animals.size()-1){
 				animals.get(i).setTarget(Core.RPointToPVector(points.get(i)));
-//				movingAnimals.add(animals.get(i));
 			}else{
 				break;
 			}
@@ -193,14 +193,13 @@ public class Run extends PApplet {
 	
 	public void nextMsg(){
 		println("nextMsg");
-		gotoText=!gotoText;
+		waiting=false;
 		if(gotoText){
 			if(msgPos<messageList.size()-2){
-				msgPos++;
+					msgPos++;
 				}else{
 					msgPos=0;
 				}
-			
 			createMessage(messageList.get(msgPos));
 		}else{
 			for (Iterator<AcAnimal> iterator = animals.iterator(); iterator.hasNext();) {
@@ -208,6 +207,8 @@ public class Run extends PApplet {
 				a.setTarget(new PVector(random(width), random(height)));
 			}
 		}
+		drawFinish=false;
+		gotoText=!gotoText;
 	}
 	
 	public void addMovingAnimal(AcAnimal a){
