@@ -1,15 +1,12 @@
 package acanimalsProjection;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Timer;
-import java.util.Vector;
 
 import geomerative.RG;
-import geomerative.RPoint;
 import geomerative.RShape;
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -18,73 +15,43 @@ import processing.core.PVector;
 public class Run extends PApplet {
 	Boolean debug = true;
 	
-	ArrayList<RPoint> points = new ArrayList<RPoint>();
-	int xSpace = 10;
-	int ySpace = 10;
-	int resolution = 20;		// lower -> higher resolution
-	float letterScale = 1.3f;
+	ArrayList<PVector> points = new ArrayList<PVector>();
+	float letterScale = 20f;
 	float animalSize = 10f;
 	float whiteSpaceWidth = 30f;
 	float whiteSpaceHeight = 20f;
-	int lineHeight = 140;
+	float leftBorder = 20f;
+	float topBorder = 20f;
 	ArrayList<AcAnimal> animals = new ArrayList<AcAnimal>();
 	ArrayList<AcAnimal> movingAnimals = new ArrayList<AcAnimal>();
 	ArrayList<String> displayMsg = new ArrayList<String>();
+	ArrayList<MLetter> currentWord = new ArrayList<MLetter>();
 	int animalCnt = 200;
 	Timer nextTimer = new Timer();
 	Boolean gotoText = true;
 	int msgPos = -1;
 	
+	HashMap<String, Boolean[][]> mAlphabet = new HashMap<String, Boolean[][]>();
+	
 
 	ArrayList<String> messageList = new ArrayList<String>();
-	//String message;
-	
-	HashMap<String, RShape> alphabet = new HashMap<String, RShape>();
 
 	private boolean drawFinish = false;
 	private boolean waiting = false;
 	
 	public void setup() {
-		size(1024,758,OPENGL);
+		size(1280,720,OPENGL);
 		
 		Core.p5 = this;
 		
 		 RG.init(this);
-		 RG.setPolygonizer(RG.UNIFORMLENGTH);
-		 RG.setPolygonizerLength(resolution);
-		 
-		 messageList.add("sommer test");
-		 Boolean[][] a = new Boolean[][]{ {	true,true,true,true}, {true, false, false, true}, {true, true, true, true}, {true, false, false, true}, {true, false, false, true} };
-		 new MLetter("a", a);
-		 
-		 for (Iterator<String> iterator = displayMsg.iterator(); iterator.hasNext();) {
-			println(iterator.next());
-		 }
-		 messageList.add("abcdefghij");
-//		 messageList.add("a");
-		 messageList.add("klmnopqrst");
-		 messageList.add("uvwxyz");
-		 
-//		  buchstaben laden
 		 
 		 createLetters();
-		 for(char ch='a'; ch<='z'; ch++){
-			 alphabet.put(String.valueOf(ch), new RShape(RG.loadShape("../data/alphabet/"+String.valueOf(ch)+".svg")));	 
-		 }
-		 for(int num=0; num<=9; num++){
-			 alphabet.put(String.valueOf(num), new RShape(RG.loadShape("../data/alphabet/"+String.valueOf(num)+".svg")));	 
-		 }
-		 
-		 alphabet.put(" ", new RShape(RG.loadShape("../data/alphabet/space.svg")));
-		 alphabet.put("!", new RShape(RG.loadShape("../data/alphabet/ausrufezeichen.svg")));
-		 alphabet.put("?", new RShape(RG.loadShape("../data/alphabet/fragezeichen.svg")));
-		 alphabet.put(",", new RShape(RG.loadShape("../data/alphabet/komma.svg")));
-		 alphabet.put(".", new RShape(RG.loadShape("../data/alphabet/punkt.svg")));
-		 alphabet.put("+", new RShape(RG.loadShape("../data/alphabet/plus.svg")));
-		 alphabet.put("-", new RShape(RG.loadShape("../data/alphabet/minus.svg")));
-//		
-
 		 setupAnimals();
+		 
+		 messageList.add("sommerfest");
+
+
 		 
 //		 createMessage(messageList.get(msgPos));
 	}
@@ -115,61 +82,44 @@ public class Run extends PApplet {
 	
 	private void createMessage(String s){
 		println("message create");
-		displayMsg = msgToLines(s);
-		createPoints(displayMsg);
+		//displayMsg = msgToLines(s);
+//		createPoints(s);
+		createCurrentWord(s);
+		createWordPoints();
 		startDraw();
 	}
-	
-	private void createPoints(ArrayList<String> msg){
-		points.clear();
-		int cnt = 0;
-		for (Iterator<String> iterator = msg.iterator(); iterator.hasNext();) {
-			String line = iterator.next();
-			String[] c = line.split("");
-			ArrayList<String> chars = new ArrayList<String>();
-			Collections.addAll(chars, c); 
-			chars.remove(0);
-			ArrayList<Letter> messageLetters = new ArrayList<Letter>();
-			println("line: "+cnt);
-			for (Iterator<String> i = chars.iterator(); i.hasNext();) {
-				String s = i.next();
-				// letters are created
-				messageLetters.add(new Letter(s));
-			}
-			for (int i = 0; i < messageLetters.size(); i++) {
-				if(messageLetters.get(i)!=null){
-					if(i!=0){
-						// move Letter X Coordinate to the right according to the Letter before (first one isn't moved)
-						if(messageLetters.get(i-1)!=null){
-							messageLetters.get(i).wX = (int)messageLetters.get(i-1).getBottomRightWorld().x+xSpace;
-						}else{
-							messageLetters.get(i).wX = (int)messageLetters.get(i-2).getBottomRightWorld().x+xSpace;
-						}
-					}
-					// line move y
-					messageLetters.get(i).wY = (cnt)*lineHeight;
-					// add all Points for positions
-					points.addAll(Arrays.asList(messageLetters.get(i).getWorldPoints()));
-				}
-			}
-			cnt++;
+
+	private void createCurrentWord(String word){
+		currentWord.clear();
+		ArrayList<String> chars = new ArrayList<String>();
+		Collections.addAll(chars, word.split("")); 
+		chars.remove(0);
+		for (int i = 0; i < chars.size(); i++) {
+			currentWord.add(new MLetter(mAlphabet.get(chars.get(i))));
 		}
-				
-		
-		
-//		points.addAll(Arrays.asList(alphabet.get(chars.get(0)).getPoints()));
-//		for (int i = 1; i < chars.size(); i++) {
-//			alphabet.get(chars.get(i)).wX = (int)alphabet.get(chars.get(i-1)).getBottomRightWorld().x+space;
-//			RPoint[] tPoints = alphabet.get(chars.get(i)).getWorldPoints();
-//			points.addAll(Arrays.asList(tPoints));
-//		}
+		for (int j = 0; j < currentWord.size(); j++) {
+			if(j>0){
+				currentWord.get(j).createDisplayPoints(leftBorder+whiteSpaceWidth+currentWord.get(j-1).rightDisplayPoint.x,topBorder);
+			}else{
+				currentWord.get(j).createDisplayPoints(leftBorder,topBorder);
+			}
+		}
+	}
+	
+	
+	private void createWordPoints(){
+		points.clear();
+		for (Iterator<MLetter> iterator = currentWord.iterator(); iterator.hasNext();) {
+			MLetter letter = iterator.next();
+			points.addAll(letter.getDisplayPoints());
+		}
 	}
 	
 	private void startDraw(){
 		drawFinish = false;
 		for (int i = 0; i < points.size(); i++) {
 			if(i<animals.size()-1){
-				animals.get(i).setTarget(Core.RPointToPVector(points.get(i)));
+				animals.get(i).setTarget(points.get(i));
 			}else{
 				break;
 			}
@@ -222,50 +172,49 @@ public class Run extends PApplet {
 	
 	
 	private void createLetters(){
-		 Boolean[][] a = new Boolean[][]{ { false,true,true,true,true}, {true, false, false, true, false}, {true, false, false, true, false}, { false,true,true,true,true} }; 
-		 Boolean[][] b = new Boolean[][]{ { true, true, true, true, true}, {true, false, true, false, true}, {true, false, true, false, true}, {false, true, false, true, false} }; 
-		 Boolean[][] c = new Boolean[][]{ { false, true, true, true, false}, {true, false, false, false, true}, {true, false, false, false,true}, {false, true, false, true, false} }; 
-		 Boolean[][] d = new Boolean[][]{ { true, true, true, true, true}, {true, false, false, false, true}, {true, false, false, false, true}, {false, true, true, true, false} }; 
-		 Boolean[][] e = new Boolean[][]{ { true, true, true, true, true}, {true, false, true, false, true}, {true, false, true, false,true} }; 
-		 Boolean[][] f = new Boolean[][]{ { true, true, true, true, true}, {true, false, true, false, false}, {true, false, true, false, false} }; 
-		 Boolean[][] g = new Boolean[][]{ { true, true, true, true, true}, {true, false, false, false, true}, {true, false, true, false, true}, {true, false, true, true, true} }; 
-		 Boolean[][] h = new Boolean[][]{ { true, true, true, true, true}, {false, false, true, false, false}, {false, false, true, false, false}, {true, true, true, true, true} }; 
-		 Boolean[][] i = new Boolean[][]{ { true, false, false, false, true}, {true, true, true, true, true}, {true, false, false, false, true} }; 
-		 Boolean[][] j = new Boolean[][]{ { false, false, false, true, false}, {true, false, false, false, true}, {true, true, true, true, false}, {true, false, false, false, false} }; 
-		 Boolean[][] k = new Boolean[][]{ { true, true, true, true, true}, {false, false, true, false, false}, {false, true, false, true, false}, {true, false, false, false, true} }; 
-		 Boolean[][] l = new Boolean[][]{ { true, true, true, true, true}, {false, false, false, false, true}, {false, false, false, false, true} }; 
-		 Boolean[][] m = new Boolean[][]{ { true, true, true, true, true}, {false, true, false, false, false}, {false, false, true, false, false}, {false, true, false, false, false}, {true, true, true, true, true} }; 
-		 Boolean[][] n = new Boolean[][]{ { true, true, true, true, true}, {false, true, false, false, false}, {false, false, true, false, false}, {false, false, false, true, false}, {true, true, true, true, true} }; 
-		 Boolean[][] o = new Boolean[][]{ { false, true, true, true, false}, {true, false, false, false, true}, {true, false, false, false, true}, {false, true, true, true, false} }; 
-		 Boolean[][] p = new Boolean[][]{ { true, true, true, true, true}, {true, false, true, false, false}, {true, false, true, false, false}, {false, true, false, false, false} }; 
-		 Boolean[][] q = new Boolean[][]{ { false, true, true, false, false}, {true, false, false, true, false}, {false, true, true, false, true} }; 
-		 Boolean[][] r = new Boolean[][]{ { true, true, true, true, true}, {true, false, true, false, false}, {true, false, true, true, false}, {false, true, false, false, true} }; 
-		 Boolean[][] s = new Boolean[][]{ { true, true, true, false, true}, {true, false, true, false, true}, {true, false, true, true, true} }; 
-		 Boolean[][] t = new Boolean[][]{ { true, false, false, false, false}, { true, false, false, false, false}, {true, true, true, true, true}, { true, false, false, false, false}, { true, false, false, false, false} }; 
-		 Boolean[][] u = new Boolean[][]{ { true, true, true, true, true}, {false, false, false, false, true}, {true, true, true, true, true} }; 
-		 Boolean[][] v = new Boolean[][]{ { true, true, true, true, false}, {false, false, false, false, true}, {true, true, true, true, false} }; 
-		 Boolean[][] w = new Boolean[][]{ { true, true, true, true, false}, {false, false, false, false, true}, {false, false, true, true, false}, {false, false, false, false, true}, {true, true, true, true, false} }; 
-		 Boolean[][] x = new Boolean[][]{ { true, true, false, true, true}, {false, false, true, false, false}, {false, false, true, false, false}, { true, true, false, true, true} }; 
-		 Boolean[][] y = new Boolean[][]{ { true, true, true, false, false}, {false, false, false, true, true}, { true, true, true, false, false} }; 
-		 Boolean[][] z = new Boolean[][]{ { true, false, false, true, true}, {true, false, true, false, true}, {true, true, false, false, true} }; 
-		 Boolean[][] eins = new Boolean[][]{ { true,true,true,true,true}, {true, false, false, true,true}, {true, true, true, true,true}, {true, false, false, true,true}, {true, false, false, true,true} }; 
-		 Boolean[][] zwei = new Boolean[][]{ { true,true,true,true,true}, {true, false, false, true,true}, {true, true, true, true,true}, {true, false, false, true,true}, {true, false, false, true,true} }; 
-		 Boolean[][] drei = new Boolean[][]{ { true,true,true,true,true}, {true, false, false, true,true}, {true, true, true, true,true}, {true, false, false, true,true}, {true, false, false, true,true} }; 
-		 Boolean[][] vier = new Boolean[][]{ { true,true,true,true,true}, {true, false, false, true,true}, {true, true, true, true,true}, {true, false, false, true,true}, {true, false, false, true,true} }; 
-		 Boolean[][] fuenf = new Boolean[][]{ { true,true,true,true,true}, {true, false, false, true,true}, {true, true, true, true,true}, {true, false, false, true,true}, {true, false, false, true,true} }; 
-		 Boolean[][] sechs = new Boolean[][]{ { true,true,true,true,true}, {true, false, false, true,true}, {true, true, true, true,true}, {true, false, false, true,true}, {true, false, false, true,true} }; 
-		 Boolean[][] sieben = new Boolean[][]{ { true,true,true,true,true}, {true, false, false, true,true}, {true, true, true, true,true}, {true, false, false, true,true}, {true, false, false, true,true} }; 
-		 Boolean[][] acht = new Boolean[][]{ { true,true,true,true,true}, {true, false, false, true,true}, {true, true, true, true,true}, {true, false, false, true,true}, {true, false, false, true,true} }; 
-		 Boolean[][] neun = new Boolean[][]{ { true,true,true,true,true}, {true, false, false, true,true}, {true, true, true, true,true}, {true, false, false, true,true}, {true, false, false, true,true} }; 
-		 Boolean[][] zehn = new Boolean[][]{ { true,true,true,true,true}, {true, false, false, true,true}, {true, true, true, true,true}, {true, false, false, true,true}, {true, false, false, true,true} }; 
-		 Boolean[][] plus = new Boolean[][]{ { false, false, true, false, false}, {false, true, true, true, false}, { false, false, true, false, false} }; 
-		 Boolean[][] minus = new Boolean[][]{ { false, false, true, false, false}, { false, false, true, false, false}, { false, false, true, false, false} }; 
-		 Boolean[][] rufzeichen = new Boolean[][]{ { true,true,true,false, true} }; 
-		 Boolean[][] leerzeichen = new Boolean[][]{ { false, false, false, false, false} };
-		 Boolean[][] fragezeichen = new Boolean[][]{ { true, false, false, false, false}, { true, false, true, false, true}, { true, true, true, false, false} };
-		 Boolean[][] punkt = new Boolean[][]{ { false, false, false, false, true} }; 
-		 Boolean[][] komma = new Boolean[][]{ { false, false, false, true, true} }; 
-
+		mAlphabet.put("a", new Boolean[][]{ { false,true,true,true,true}, {true, false, false, true, false}, {true, false, false, true, false}, { false,true,true,true,true} }); 
+		mAlphabet.put("b", new Boolean[][]{ { true, true, true, true, true}, {true, false, true, false, true}, {true, false, true, false, true}, {false, true, false, true, false} }); 
+		mAlphabet.put("c", new Boolean[][]{ { false, true, true, true, false}, {true, false, false, false, true}, {true, false, false, false,true}, {false, true, false, true, false} }); 
+		mAlphabet.put("d", new Boolean[][]{ { true, true, true, true, true}, {true, false, false, false, true}, {true, false, false, false, true}, {false, true, true, true, false} }); 
+		mAlphabet.put("e", new Boolean[][]{ { true, true, true, true, true}, {true, false, true, false, true}, {true, false, true, false,true} }); 
+		mAlphabet.put("f", new Boolean[][]{ { true, true, true, true, true}, {true, false, true, false, false}, {true, false, true, false, false} }); 
+		mAlphabet.put("g", new Boolean[][]{ { true, true, true, true, true}, {true, false, false, false, true}, {true, false, true, false, true}, {true, false, true, true, true} }); 
+		mAlphabet.put("h", new Boolean[][]{ { true, true, true, true, true}, {false, false, true, false, false}, {false, false, true, false, false}, {true, true, true, true, true} }); 
+		mAlphabet.put("i", new Boolean[][]{ { true, false, false, false, true}, {true, true, true, true, true}, {true, false, false, false, true} }); 
+		mAlphabet.put("j", new Boolean[][]{ { false, false, false, true, false}, {true, false, false, false, true}, {true, true, true, true, false}, {true, false, false, false, false} }); 
+		mAlphabet.put("k", new Boolean[][]{ { true, true, true, true, true}, {false, false, true, false, false}, {false, true, false, true, false}, {true, false, false, false, true} }); 
+		mAlphabet.put("l", new Boolean[][]{ { true, true, true, true, true}, {false, false, false, false, true}, {false, false, false, false, true} }); 
+		mAlphabet.put("m", new Boolean[][]{ { true, true, true, true, true}, {false, true, false, false, false}, {false, false, true, false, false}, {false, true, false, false, false}, {true, true, true, true, true} }); 
+		mAlphabet.put("n", new Boolean[][]{ { true, true, true, true, true}, {false, true, false, false, false}, {false, false, true, false, false}, {false, false, false, true, false}, {true, true, true, true, true} }); 
+		mAlphabet.put("o", new Boolean[][]{ { false, true, true, true, false}, {true, false, false, false, true}, {true, false, false, false, true}, {false, true, true, true, false} }); 
+		mAlphabet.put("p", new Boolean[][]{ { true, true, true, true, true}, {true, false, true, false, false}, {true, false, true, false, false}, {false, true, false, false, false} }); 
+		mAlphabet.put("q", new Boolean[][]{ { false, true, true, false, false}, {true, false, false, true, false}, {false, true, true, false, true} }); 
+		mAlphabet.put("r", new Boolean[][]{ { true, true, true, true, true}, {true, false, true, false, false}, {true, false, true, true, false}, {false, true, false, false, true} }); 
+		mAlphabet.put("s", new Boolean[][]{ { true, true, true, false, true}, {true, false, true, false, true}, {true, false, true, true, true} }); 
+		mAlphabet.put("t", new Boolean[][]{ { true, false, false, false, false}, { true, false, false, false, false}, {true, true, true, true, true}, { true, false, false, false, false}, { true, false, false, false, false} }); 
+		mAlphabet.put("u", new Boolean[][]{ { true, true, true, true, true}, {false, false, false, false, true}, {true, true, true, true, true} }); 
+		mAlphabet.put("v", new Boolean[][]{ { true, true, true, true, false}, {false, false, false, false, true}, {true, true, true, true, false} }); 
+		mAlphabet.put("w", new Boolean[][]{ { true, true, true, true, false}, {false, false, false, false, true}, {false, false, true, true, false}, {false, false, false, false, true}, {true, true, true, true, false} }); 
+		mAlphabet.put("x", new Boolean[][]{ { true, true, false, true, true}, {false, false, true, false, false}, {false, false, true, false, false}, { true, true, false, true, true} }); 
+		mAlphabet.put("y", new Boolean[][]{ { true, true, true, false, false}, {false, false, false, true, true}, { true, true, true, false, false} }); 
+		mAlphabet.put("z", new Boolean[][]{ { true, false, false, true, true}, {true, false, true, false, true}, {true, true, false, false, true} }); 
+		mAlphabet.put("1", new Boolean[][]{ { true,true,true,true,true}, {true, false, false, true,true}, {true, true, true, true,true}, {true, false, false, true,true}, {true, false, false, true,true} }); 
+		mAlphabet.put("2", new Boolean[][]{ { true,true,true,true,true}, {true, false, false, true,true}, {true, true, true, true,true}, {true, false, false, true,true}, {true, false, false, true,true} }); 
+		mAlphabet.put("3", new Boolean[][]{ { true,true,true,true,true}, {true, false, false, true,true}, {true, true, true, true,true}, {true, false, false, true,true}, {true, false, false, true,true} }); 
+		mAlphabet.put("4", new Boolean[][]{ { true,true,true,true,true}, {true, false, false, true,true}, {true, true, true, true,true}, {true, false, false, true,true}, {true, false, false, true,true} }); 
+		mAlphabet.put("5", new Boolean[][]{ { true,true,true,true,true}, {true, false, false, true,true}, {true, true, true, true,true}, {true, false, false, true,true}, {true, false, false, true,true} }); 
+		mAlphabet.put("6", new Boolean[][]{ { true,true,true,true,true}, {true, false, false, true,true}, {true, true, true, true,true}, {true, false, false, true,true}, {true, false, false, true,true} }); 
+		mAlphabet.put("7", new Boolean[][]{ { true,true,true,true,true}, {true, false, false, true,true}, {true, true, true, true,true}, {true, false, false, true,true}, {true, false, false, true,true} }); 
+		mAlphabet.put("8", new Boolean[][]{ { true,true,true,true,true}, {true, false, false, true,true}, {true, true, true, true,true}, {true, false, false, true,true}, {true, false, false, true,true} }); 
+		mAlphabet.put("9", new Boolean[][]{ { true,true,true,true,true}, {true, false, false, true,true}, {true, true, true, true,true}, {true, false, false, true,true}, {true, false, false, true,true} }); 
+		mAlphabet.put("0", new Boolean[][]{ { true,true,true,true,true}, {true, false, false, true,true}, {true, true, true, true,true}, {true, false, false, true,true}, {true, false, false, true,true} }); 
+		mAlphabet.put("+", new Boolean[][]{ { false, false, true, false, false}, {false, true, true, true, false}, { false, false, true, false, false} }); 
+		mAlphabet.put("-", new Boolean[][]{ { false, false, true, false, false}, { false, false, true, false, false}, { false, false, true, false, false} }); 
+		mAlphabet.put("!", new Boolean[][]{ { true,true,true,false, true} }); 
+		mAlphabet.put(" ", new Boolean[][]{ { false, false, false, false, false} });
+		mAlphabet.put("?", new Boolean[][]{ { true, false, false, false, false}, { true, false, true, false, true}, { true, true, true, false, false} });
+		mAlphabet.put(".", new Boolean[][]{ { false, false, false, false, true} }); 
+		mAlphabet.put(",", new Boolean[][]{ { false, false, false, true, true} });
 	}
 	
 	
