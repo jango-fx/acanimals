@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Timer;
 
+
 import geomerative.RG;
 import geomerative.RShape;
 import processing.core.PApplet;
@@ -29,8 +30,8 @@ public class Run extends PApplet {
 	ArrayList<MLetter> currentWord = new ArrayList<MLetter>();
 	int animalCnt = 200;
 	Timer nextTimer = new Timer();
-	Boolean gotoText = true;
-	int msgPos = -1;
+	Boolean gotoText = false;
+	int msgPos = 0;
 	
 	HashMap<String, Boolean[][]> mAlphabet = new HashMap<String, Boolean[][]>();
 	
@@ -51,6 +52,7 @@ public class Run extends PApplet {
 		 setupAnimals();
 		 
 		 messageList.add("som mer");
+		 messageList.add("art+com");
 
 
 		 
@@ -158,27 +160,34 @@ public class Run extends PApplet {
 	
 	public void nextMsg(){
 		
-		println("nextMsg");
+		println("nextMsg / gotoText: "+gotoText);
 		waiting=false;
-		displayMsg.remove(0);
-		
+		if(displayMsg.size()>0){
+			displayMsg.remove(0);	
+		}
 		if(displayMsg.size()>0){
 			createCurrentWord(displayMsg.get(0));
 			createWordPoints();
 			startDraw();
-		}else if(gotoText){
-			if(msgPos<messageList.size()-2){
-				msgPos++;
-			}else{
-				msgPos=0;
-			}
-		createMessage(messageList.get(msgPos));
 		}else{
-			for (Iterator<AcAnimal> iterator = animals.iterator(); iterator.hasNext();) {
-				AcAnimal a = iterator.next();
-				a.setTarget(new PVector(random(width), random(height)));
-			}
+			if(gotoText){
+				gotoText=false;
+				println(msgPos);
+				if(msgPos<messageList.size()-1){
+					msgPos++;
+				}else{
+					msgPos=0;
+				}
+				createMessage(messageList.get(msgPos));
+			}else{
+				for (Iterator<AcAnimal> iterator = animals.iterator(); iterator.hasNext();) {
+					AcAnimal a = iterator.next();
+					a.setTarget(new PVector(random(width), height));
+				}
+				gotoText=true;
 		}
+		}
+		drawFinish=false;
 		
 		
 		/*
