@@ -1,0 +1,4 @@
+#!/bin/sh
+
+APPDIR=$(dirname "$0")
+java  -Djava.library.path="$APPDIR" -cp "$APPDIR/lib/Run.jar:$APPDIR/lib/gluegen-rt.jar:$APPDIR/lib/jogl.jar:$APPDIR/lib/opengl.jar:$APPDIR/lib/ant-launcher.jar:$APPDIR/lib/ant.jar:$APPDIR/lib/core.jar:$APPDIR/lib/batikfont.jar:$APPDIR/lib/geomerative.jar:$APPDIR/lib/openkinect.jar:$APPDIR/lib/controlP5.jar"buffetKinect.Run
