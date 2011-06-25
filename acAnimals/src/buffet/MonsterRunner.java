@@ -1,5 +1,6 @@
 package buffet;
 
+import monster.Monster;
 import processing.core.*;
 
 public class MonsterRunner extends Monster

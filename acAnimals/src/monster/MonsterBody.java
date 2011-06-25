@@ -1,6 +1,8 @@
-package buffet;
+package monster;
 
 import javax.media.opengl.GL;
+
+import buffet.Core;
 
 import processing.core.*;
 import processing.opengl.PGraphicsOpenGL;
