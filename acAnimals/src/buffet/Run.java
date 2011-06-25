@@ -14,7 +14,7 @@ public class Run extends PApplet {
 	{
 		Core.p5 = this;
 		
-	  size(screen.width, screen.height, OPENGL);
+	  size(1440, 900, OPENGL);
 	  scale(0.1f);
 	  for (int i= 0; i < mo.length; i++) {
 	    mo[i] = new MonsterRunner(mo, 0, random(50, width-50), random(50,height-50), (int)random(3)*90, 0, 71, random(-14,14), (int)random(3)*90);    
@@ -48,5 +48,7 @@ public class Run extends PApplet {
 	    mo[i].update();
 	  }
 	}
-
+	public static void main(String _args[]) {
+		  PApplet.main(new String[] { "--present", Run.class.getName() });
+	}
 }
