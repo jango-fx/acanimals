@@ -1,4 +1,4 @@
-package buffet;
+package buffetKinect;
 
 import processing.core.PApplet;
 import processing.opengl.*;
