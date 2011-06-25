@@ -1,8 +1,9 @@
 package acAnimals_BaseClass;
 
-import processing.core.*;
+import processing.core.PVector;
 
-public class class_Monster {
+
+public class Monster {
 	 //  float width, height;
 	  PVector pos, subPos;
 	  PVector vel, acc;
