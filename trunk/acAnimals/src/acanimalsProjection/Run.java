@@ -167,7 +167,17 @@ public class Run extends PApplet {
 			createWordPoints();
 			startDraw();
 		}else if(gotoText){
-			
+			if(msgPos<messageList.size()-2){
+				msgPos++;
+			}else{
+				msgPos=0;
+			}
+		createMessage(messageList.get(msgPos));
+		}else{
+			for (Iterator<AcAnimal> iterator = animals.iterator(); iterator.hasNext();) {
+				AcAnimal a = iterator.next();
+				a.setTarget(new PVector(random(width), random(height)));
+			}
 		}
 		
 		
