@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Timer;
 
+import monster.Monster;
+
 
 
 import geomerative.RG;
@@ -16,10 +18,10 @@ import processing.core.PVector;
 
 
 public class Run extends PApplet {
-	Boolean debug = true;
+	Boolean debug = false;
 	
 	ArrayList<PVector> points = new ArrayList<PVector>();
-	float letterScale = 20f;
+	float letterScale = 28f;
 	float animalSize = 10f;
 	float whiteSpaceWidth = 30f;
 	float whiteSpaceHeight = 20f;
@@ -52,12 +54,13 @@ public class Run extends PApplet {
 		 createLetters();
 		 setupAnimals();
 		 
-		 messageList.add("som mer");
-		 messageList.add("art+com");
-
+		 messageList.add("sommerfest test");
+		 messageList.add("und das ist auch ein fest");
 
 		 
 		 createMessage(messageList.get(0));
+		 
+		 Monster.f=0.15f;
 	}
 
 	public void draw() {
@@ -73,7 +76,6 @@ public class Run extends PApplet {
 	    for (Iterator<AcAnimal> i = animals.iterator(); i.hasNext();) {
 			AcAnimal ac =  i.next();
 			ac.update();
-			ac.draw();
 		}
 	    if(movingAnimals.isEmpty() && drawFinish==false && !waiting){
 	    	drawFinish = true;
@@ -128,10 +130,17 @@ public class Run extends PApplet {
 				break;
 			}
 		}
+		for (Iterator<AcAnimal> iterator = animals.iterator(); iterator.hasNext();) {
+			AcAnimal a = iterator.next();
+			if(!a.isMoving()){
+				a.setTarget(new PVector(random(width),height));
+			}
+			
+		}
 	}
 	private void setupAnimals(){
 		for (int i = 0; i < animalCnt; i++) {
-			animals.add(new AcAnimal(new PVector((int)random(width), (int)random(height))));
+			animals.add(new AcAnimal(Core.p5, 0, random(50, width-50), random(50,height-50), (int)random(3)*90, 0, 71, random(-14,14), (int)random(3)*90));
 		}
 	}
 	
@@ -161,7 +170,6 @@ public class Run extends PApplet {
 	
 	public void nextMsg(){
 		
-		println("nextMsg / gotoText: "+gotoText);
 		waiting=false;
 		if(displayMsg.size()>0){
 			displayMsg.remove(0);	
@@ -173,7 +181,6 @@ public class Run extends PApplet {
 		}else{
 			if(gotoText){
 				gotoText=false;
-				println(msgPos);
 				if(msgPos<messageList.size()-1){
 					msgPos++;
 				}else{

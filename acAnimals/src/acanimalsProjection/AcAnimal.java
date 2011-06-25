@@ -1,16 +1,15 @@
 package acanimalsProjection;
 
+import monster.Monster;
 import geomerative.RG;
 import geomerative.RShape;
 import processing.core.PApplet;
 import processing.core.PVector;
 
-public class AcAnimal {
+public class AcAnimal extends Monster{
 	Run p5;
 	
 	private Boolean moving = false;
-	
-	private PVector location = new PVector();
 	private PVector target = new PVector();
 	private PVector dir = new PVector();
 	float size = Core.p5.animalSize;
@@ -18,28 +17,30 @@ public class AcAnimal {
 	private float arriveDist = speed-1;
 	private RShape gfx;
 	
-	public AcAnimal(PVector loc){
+	public AcAnimal(PApplet parent, int t1, float x1, float y1, int r1, int t2, float x2, float y2, int r2){
+		super(parent, t1,x1,y1,r1,t2,x2,y2,r2);
 		p5 = Core.p5;
-		location = loc;
 		gfx = RG.loadShape("../data/testtierchen.svg");
 		gfx.scale(0.15f);
 	}
 	
 	public void update(){
+		
 		// check if the animal has arrived
-		if(location.x >= target.x-arriveDist && location.x <= target.x+arriveDist){
-			if(location.y >=target.y-arriveDist && location.y <= target.y+arriveDist){
+		if(pos.x >= target.x-arriveDist && pos.x <= target.x+arriveDist){
+			if(pos.y >=target.y-arriveDist && pos.y <= target.y+arriveDist){
 				moving=false;
 				Core.p5.removeMovingAnimal(this);
 			}
 		}
 		// moves the animal
 		if(moving){
-			dir=PVector.sub(target,location);
+			dir=PVector.sub(target,pos);
 			dir.normalize();
 			dir.mult(speed);
-			location.add(dir);
+			pos.add(dir);
 		}
+		super.update();
 	}
 	
 	public void setTarget(PVector t){
@@ -47,13 +48,17 @@ public class AcAnimal {
 		target = t;
 		moving=true;
 	}
-	public void draw(){
-//		p5.fill(255,0,0);
-//		p5.noStroke();
-//		p5.rect(location.x, location.y, size, size);
-		p5.pushMatrix();
-		p5.translate(location.x,location.y);
-		gfx.draw(p5);
-		p5.popMatrix();
+	
+	public Boolean isMoving(){
+		return moving;
 	}
+//	public void draw(){
+////		p5.fill(255,0,0);
+////		p5.noStroke();
+////		p5.rect(location.x, location.y, size, size);
+//		p5.pushMatrix();
+//		p5.translate(pos.x,pos.y);
+//		gfx.draw(p5);
+//		p5.popMatrix();
+//	}
 }
