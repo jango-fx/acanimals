@@ -25,7 +25,7 @@ public class MonsterRunner extends Monster
 	    neighbours = n;
 	  }
 
-	  void update()
+	  public void update()
 	  {
 	    move();
 	    super.draw();
