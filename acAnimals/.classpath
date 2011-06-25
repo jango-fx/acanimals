@@ -1,77 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="lib/base/opengl/gluegen-rt-natives-linux-amd64.jar">
+	<classpathentry kind="lib" path="lib/base/opengl/gluegen-rt.jar" sourcepath="/Applications/Processing.app/Contents/Resources/Java/modes/java/libraries/opengl/src">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="acAnimals/lib/base/opengl"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/base/opengl/gluegen-rt-natives-linux-i586.jar">
+	<classpathentry kind="lib" path="lib/base/opengl/jogl.jar" sourcepath="/Applications/Processing.app/Contents/Resources/Java/modes/java/libraries/opengl/src">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="acAnimals/lib/base/opengl"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/base/opengl/gluegen-rt-natives-macosx-ppc.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="acAnimals/lib/base/opengl"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/base/opengl/gluegen-rt-natives-macosx-universal.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="acAnimals/lib/base/opengl"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/base/opengl/gluegen-rt-natives-windows-amd64.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="acAnimals/lib/base/opengl"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/base/opengl/gluegen-rt-natives-windows-i586.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="acAnimals/lib/base/opengl"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/base/opengl/gluegen-rt.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="acAnimals/lib/base/opengl"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/base/opengl/jogl-natives-linux-amd64.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="acAnimals/lib/base/opengl"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/base/opengl/jogl-natives-linux-i586.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="acAnimals/lib/base/opengl"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/base/opengl/jogl-natives-macosx-ppc.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="acAnimals/lib/base/opengl"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/base/opengl/jogl-natives-macosx-universal.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="acAnimals/lib/base/opengl"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/base/opengl/jogl-natives-windows-amd64.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="acAnimals/lib/base/opengl"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/base/opengl/jogl-natives-windows-i586.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="acAnimals/lib/base/opengl"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/base/opengl/jogl.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="acAnimals/lib/base/opengl"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/base/opengl/opengl.jar">
+	<classpathentry kind="lib" path="lib/base/opengl/opengl.jar" sourcepath="/Applications/Processing.app/Contents/Resources/Java/modes/java/libraries/opengl/src">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="acAnimals/lib/base/opengl"/>
 		</attributes>
@@ -91,16 +30,32 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="acAnimals/lib/base/core"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/user/geomerative/batikfont.jar">
+	<classpathentry kind="lib" path="lib/user/geomerative/batikfont.jar" sourcepath="/Users/christophs/Documents/Processing/libraries/geomerative/src">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="acAnimals/lib/user/geomerative"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/user/geomerative/geomerative.jar" sourcepath="/Users/norrix/Documents/Processing/libraries/geomerative/src">
+	<classpathentry kind="lib" path="lib/user/geomerative/geomerative.jar" sourcepath="/Users/christophs/Documents/Processing/libraries/geomerative/src">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="acAnimals/lib/user/geomerative"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/user/opengl/gluegen-rt.jar" sourcepath="/Users/christophs/Documents/Processing/libraries/opengl/src">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="acAnimals/lib/user/opengl"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/user/opengl/jogl.jar" sourcepath="/Users/christophs/Documents/Processing/libraries/opengl/src">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="acAnimals/lib/user/opengl"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/user/opengl/opengl.jar" sourcepath="/Users/christophs/Documents/Processing/libraries/opengl/src">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="acAnimals/lib/user/opengl"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
