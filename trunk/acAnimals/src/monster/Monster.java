@@ -19,8 +19,8 @@ public class Monster
 	    pos = new PVector(x1, y1);
 	    subPos = new PVector(x2, y2);
 
-	    main = new MonsterBody(t1, r1);
-	    sub = new MonsterBody(t2, r2);
+	    main = new MonsterBody(p, t1, r1);
+	    sub = new MonsterBody(p, t2, r2);
 	  }
 
 	  void update()
