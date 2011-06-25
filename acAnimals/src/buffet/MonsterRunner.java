@@ -10,7 +10,7 @@ public class MonsterRunner extends Monster
 	
 	  MonsterRunner(int t1, float x1, float y1, int r1, int t2, float x2,float y2, int r2)
 	  {
-			super(t1, x1, y1, r1, t2, x2, y2, r2);
+			super(Core.p5, t1, x1, y1, r1, t2, x2, y2, r2);
 			
 //		    vel = new PVector(Core.p5.random(-10.0f, 10.0f), Core.p5.random(-10.0f, 10.0f));
 		    //neighbours = n;
@@ -19,7 +19,7 @@ public class MonsterRunner extends Monster
 	  
 	  MonsterRunner(MonsterRunner[] n, int t1, float x1, float y1, int r1, int t2, float x2, float y2, int r2)
 	  {
-	    super(t1, x1, y1, r1, t2, x2, y2, r2);
+	    super(Core.p5, t1, x1, y1, r1, t2, x2, y2, r2);
 	    
 	    vel = new PVector(Core.p5.random(-10.0f, 10.0f), Core.p5.random(-10.0f, 10.0f));
 	    neighbours = n;
