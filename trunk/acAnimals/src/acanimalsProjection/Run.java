@@ -1,6 +1,7 @@
 package acanimalsProjection;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -49,11 +50,11 @@ public class Run extends PApplet {
 		 createLetters();
 		 setupAnimals();
 		 
-		 messageList.add("sommerfest");
+		 messageList.add("som mer");
 
 
 		 
-//		 createMessage(messageList.get(msgPos));
+		 createMessage(messageList.get(0));
 	}
 
 	public void draw() {
@@ -82,9 +83,9 @@ public class Run extends PApplet {
 	
 	private void createMessage(String s){
 		println("message create");
-		//displayMsg = msgToLines(s);
+		displayMsg = msgToWords(s);
 //		createPoints(s);
-		createCurrentWord(s);
+		createCurrentWord(displayMsg.get(0));
 		createWordPoints();
 		startDraw();
 	}
@@ -131,6 +132,11 @@ public class Run extends PApplet {
 		}
 	}
 	
+	private ArrayList<String> msgToWords(String msg){
+		ArrayList<String> words = new ArrayList<String>(Arrays.asList(msg.split(" ")));
+		return words;
+	}
+	
 	private ArrayList<String> msgToLines(String msg){
 		ArrayList<String> lines = new ArrayList<String>();
 		String[] words = msg.split(" ");
@@ -151,23 +157,39 @@ public class Run extends PApplet {
 	
 	
 	public void nextMsg(){
+		
 		println("nextMsg");
 		waiting=false;
-		if(gotoText){
-			if(msgPos<messageList.size()-2){
-					msgPos++;
-				}else{
-					msgPos=0;
-				}
-			createMessage(messageList.get(msgPos));
-		}else{
-			for (Iterator<AcAnimal> iterator = animals.iterator(); iterator.hasNext();) {
-				AcAnimal a = iterator.next();
-				a.setTarget(new PVector(random(width), random(height)));
-			}
+		displayMsg.remove(0);
+		
+		if(displayMsg.size()>0){
+			createCurrentWord(displayMsg.get(0));
+			createWordPoints();
+			startDraw();
+		}else if(gotoText){
+			
 		}
-		drawFinish=false;
-		gotoText=!gotoText;
+		
+		
+		/*
+		 * 	alte version
+		 * 	
+		 */
+//		if(gotoText){
+//			if(msgPos<messageList.size()-2){
+//					msgPos++;
+//				}else{
+//					msgPos=0;
+//				}
+//			createMessage(messageList.get(msgPos));
+//		}else{
+//			for (Iterator<AcAnimal> iterator = animals.iterator(); iterator.hasNext();) {
+//				AcAnimal a = iterator.next();
+//				a.setTarget(new PVector(random(width), random(height)));
+//			}
+//		}
+//		drawFinish=false;
+//		gotoText=!gotoText;
 	}
 	
 	

@@ -1,16 +1,19 @@
-package buffet;
+package monster;
 
+import buffet.Core;
 import processing.core.*;
 
 public class Monster
 {
 	  //  float width, height;
-	  PVector pos, subPos;
+	  protected PVector pos;
+
+	PVector subPos;
 
 	  MonsterBody main, sub;
-	  float f=0.3f;
+	  protected float f=0.3f;
 
-	  Monster(int t1, float x1, float y1, int r1, int t2, float x2, float y2, int r2)
+	  protected Monster(int t1, float x1, float y1, int r1, int t2, float x2, float y2, int r2)
 	  {
 	    pos = new PVector(x1, y1);
 	    subPos = new PVector(x2, y2);
@@ -24,7 +27,7 @@ public class Monster
 	    draw();
 	  }
 
-	  void draw()
+	  protected void draw()
 	  { 
 		  Core.p5.pushMatrix();
 
