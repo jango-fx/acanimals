@@ -1,5 +1,7 @@
 package buffet;
 
+import javax.media.opengl.GL;
+
 import processing.core.*;
 import processing.opengl.PGraphicsOpenGL;
 
@@ -15,10 +17,10 @@ public class MonsterBody {
 	  
 	  void draw()
 	  {
-	    pushMatrix();
-	    translate(71/2, 98/2);
-	    rotate(radians(rot));
-	    translate(-71/2, -98/2);  
+		  Core.p5.pushMatrix();
+		  Core.p5.translate(71/2, 98/2);
+		  Core.p5.rotate(PApplet.radians(rot));
+		  Core.p5.translate(-71/2, -98/2);
 	    
 	    switch(type)
 	    {
@@ -29,12 +31,12 @@ public class MonsterBody {
 	    case 2: drawPlus();
 	      break;
 	    }
-	    popMatrix();
+	    Core.p5.popMatrix();
 	  }
 
 	  void drawA()
 	  {
-	    PGraphicsOpenGL pgl = (PGraphicsOpenGL) g;
+	    PGraphicsOpenGL pgl = (PGraphicsOpenGL) Core.p5.g;
 	    GL gl = pgl.beginGL();
 	    gl.glColor3f(0,0,0);
 	    
@@ -79,7 +81,7 @@ public class MonsterBody {
 
 	  void drawC()
 	  {
-	    PGraphicsOpenGL pgl = (PGraphicsOpenGL) g;
+	    PGraphicsOpenGL pgl = (PGraphicsOpenGL) Core.p5.g;
 	    GL gl = pgl.beginGL();
 	    //============================
 	    gl.glBegin(GL.GL_TRIANGLES);
@@ -129,7 +131,7 @@ public class MonsterBody {
 
 	  void drawPlus()
 	  {
-	    PGraphicsOpenGL pgl = (PGraphicsOpenGL) g;
+	    PGraphicsOpenGL pgl = (PGraphicsOpenGL) Core.p5.g;
 	    GL gl = pgl.beginGL();
 	    gl.glBegin(GL.GL_TRIANGLES);
 	    //============================

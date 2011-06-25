@@ -8,7 +8,7 @@ public class Monster
 	  PVector pos, subPos;
 
 	  MonsterBody main, sub;
-	  float f=0.3;
+	  float f=0.3f;
 
 	  Monster(int t1, float x1, float y1, int r1, int t2, float x2, float y2, int r2)
 	  {
@@ -26,15 +26,15 @@ public class Monster
 
 	  void draw()
 	  { 
-	    pushMatrix();
+		  Core.p5.pushMatrix();
 
-	    translate(pos.x, pos.y);
-	    scale(f);
+		  Core.p5.translate(pos.x, pos.y);
+		  Core.p5.scale(f);
 	    main.draw();
 
-	    translate(subPos.x, subPos.y);
+	    Core.p5.translate(subPos.x, subPos.y);
 	    sub.draw();
 
-	    popMatrix();
+	    Core.p5.popMatrix();
 	  }
 	}
