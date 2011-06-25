@@ -7,12 +7,13 @@ public class Monster
 	  //  float width, height;
 	  protected PVector pos;
 
-	PVector subPos;
+	  PVector subPos;
+	  
  
 	  MonsterBody main, sub;
 	  PApplet p;
-	  protected float f=0.3f;
-
+	  public static float f=0.3f;
+	  
 	  protected Monster(PApplet parent, int t1, float x1, float y1, int r1, int t2, float x2, float y2, int r2)
 	  {
 		p = parent;
@@ -23,7 +24,7 @@ public class Monster
 	    sub = new MonsterBody(p, t2, r2);
 	  }
 
-	  void update()
+	  public void update()
 	  {
 	    draw();
 	  }
@@ -41,4 +42,5 @@ public class Monster
 
 	    p.popMatrix();
 	  }
+	  
 	}
