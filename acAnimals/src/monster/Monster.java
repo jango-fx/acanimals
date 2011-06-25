@@ -1,6 +1,5 @@
 package monster;
 
-import buffet.Core;
 import processing.core.*;
 
 public class Monster
@@ -9,7 +8,7 @@ public class Monster
 	  protected PVector pos;
 
 	PVector subPos;
-
+ 
 	  MonsterBody main, sub;
 	  protected float f=0.3f;
 
