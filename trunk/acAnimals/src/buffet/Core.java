@@ -2,7 +2,6 @@ package buffet;
 
 import processing.core.PVector;
 import geomerative.RPoint;
-import acanimalsProjection.Run;
 
 public class Core {
 	public static Run p5;
