@@ -8,21 +8,23 @@ import processing.core.*;
 import processing.opengl.PGraphicsOpenGL;
 
 public class MonsterBody {
+	PApplet p;
 	  int type=0;
 	  int rot=0;
 	  
-	  MonsterBody(int t, int r)
+	  MonsterBody(PApplet p, int t, int r)
 	  {
+		  this.p=p;
 	    type = t;
 	    rot = r;
 	  }
 	  
 	  void draw()
 	  {
-		  Core.p5.pushMatrix();
-		  Core.p5.translate(71/2, 98/2);
-		  Core.p5.rotate(PApplet.radians(rot));
-		  Core.p5.translate(-71/2, -98/2);
+		  p.pushMatrix();
+		  p.translate(71/2, 98/2);
+		  p.rotate(PApplet.radians(rot));
+		  p.translate(-71/2, -98/2);
 	    
 	    switch(type)
 	    {
@@ -33,12 +35,12 @@ public class MonsterBody {
 	    case 2: drawPlus();
 	      break;
 	    }
-	    Core.p5.popMatrix();
+	    p.popMatrix();
 	  }
 
 	  void drawA()
 	  {
-	    PGraphicsOpenGL pgl = (PGraphicsOpenGL) Core.p5.g;
+	    PGraphicsOpenGL pgl = (PGraphicsOpenGL) p.g;
 	    GL gl = pgl.beginGL();
 	    gl.glColor3f(0,0,0);
 	    
@@ -83,7 +85,7 @@ public class MonsterBody {
 
 	  void drawC()
 	  {
-	    PGraphicsOpenGL pgl = (PGraphicsOpenGL) Core.p5.g;
+	    PGraphicsOpenGL pgl = (PGraphicsOpenGL) p.g;
 	    GL gl = pgl.beginGL();
 	    //============================
 	    gl.glBegin(GL.GL_TRIANGLES);
@@ -133,7 +135,7 @@ public class MonsterBody {
 
 	  void drawPlus()
 	  {
-	    PGraphicsOpenGL pgl = (PGraphicsOpenGL) Core.p5.g;
+	    PGraphicsOpenGL pgl = (PGraphicsOpenGL) p.g;
 	    GL gl = pgl.beginGL();
 	    gl.glBegin(GL.GL_TRIANGLES);
 	    //============================
