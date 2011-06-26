@@ -1,5 +1,6 @@
 package acanimalsProjection;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -14,9 +15,6 @@ import animalosc.AnimalOsc;
 import monster.Monster;
 
 
-
-import geomerative.RG;
-import geomerative.RShape;
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -44,8 +42,9 @@ public class Run extends PApplet {
 	int msgPos = 0;
 	
 	HashMap<String, Boolean[][]> mAlphabet = new HashMap<String, Boolean[][]>();
+	PrintWriter msgTxt;
+	 
 	
-
 	ArrayList<String> messageList = new ArrayList<String>();
 
 	private boolean drawFinish = false;
@@ -58,10 +57,18 @@ public class Run extends PApplet {
 		
 		osc = new AnimalOsc(this, 12000);
 		
-		 RG.init(this);
+		String[] msgs = loadStrings("messages.txt");
+		msgTxt = createWriter("messages.txt");
+		for (int i = 0; i < msgs.length; i++) {
+			msgTxt.println(msgs[i]);
+		}
+		msgTxt.flush();
+	//	 RG.init(this);
 		 
 		 createLetters();
 		 setupAnimals();
+		 
+		 initMessages();
 		 
 		 messageList.add("sommerfest test");
 		 messageList.add("und das ist auch ein fest");
@@ -123,6 +130,12 @@ public class Run extends PApplet {
 		}
 	}
 	
+	
+	private void initMessages(){
+		String[] msg = loadStrings("messages.txt");
+		
+		println("msg cnt: "+msg.length);
+	}
 	
 	private void createWordPoints(){
 		points.clear();
@@ -294,6 +307,9 @@ public class Run extends PApplet {
 		  if(theOscMessage.checkAddrPattern("/gruss")==true) {
 		    /* check if the typetag is the right one. */
 			  messageList.add(theOscMessage.get(0).stringValue());
+			  msgTxt.println(theOscMessage.get(0).stringValue());
+			  msgTxt.flush();
+			  //msgTxt.close();
 		      return;
 		    }else if(theOscMessage.checkAddrPattern("/animal")==true){
 		    	 int t1 = Integer.parseInt(theOscMessage.get(0).stringValue());
@@ -304,7 +320,6 @@ public class Run extends PApplet {
 		    	 float x2 = Float.valueOf(theOscMessage.get(5).stringValue()).floatValue();
 		    	 float y2 = Float.valueOf(theOscMessage.get(6).stringValue()).floatValue();
 		    	 int r2 =Integer.parseInt(theOscMessage.get(7).stringValue());
-		    	 
 		    	 newanimals.add(new AcAnimal(this, t1, x1, y1, r1, t2, x2, y2, r2));
 		      return;
 		    } 

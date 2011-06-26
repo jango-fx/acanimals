@@ -15,13 +15,13 @@ public class AcAnimal extends Monster{
 	float size = Core.p5.animalSize;
 	private float speed = 5;
 	private float arriveDist = speed-1;
-	private RShape gfx;
+//	private RShape gfx;
 	
 	public AcAnimal(PApplet parent, int t1, float x1, float y1, int r1, int t2, float x2, float y2, int r2){
 		super(parent, t1,x1,y1,r1,t2,x2,y2,r2);
 		p5 = Core.p5;
-		gfx = RG.loadShape("../data/testtierchen.svg");
-		gfx.scale(0.15f);
+//		gfx = RG.loadShape("../data/testtierchen.svg");
+//		gfx.scale(0.15f);
 	}
 	
 	public void update(){
