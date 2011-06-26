@@ -31,6 +31,7 @@ public class Monster
 
 	  protected void draw()
 	  { 
+		  
 		  p.pushMatrix();
 
 		  p.translate(pos.x, pos.y);
