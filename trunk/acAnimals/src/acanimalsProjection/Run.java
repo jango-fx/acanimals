@@ -28,12 +28,12 @@ public class Run extends PApplet {
 	Boolean debug = false;
 	
 	ArrayList<PVector> points = new ArrayList<PVector>();
-	float letterScale = 40f;
-	float animalSize = 0.2f;
-	float whiteSpaceWidth = 55f;
+	float letterScale = 35f;
+	float animalSize = 0.37f;
+	float whiteSpaceWidth = 60f;
 	float whiteSpaceHeight = 20f;
 	float leftBorder = 20f;
-	float topBorder = 20f;
+	float topBorder = 50f;
 	ArrayList<AcAnimal> animals = new ArrayList<AcAnimal>();
 	ArrayList<AcAnimal> newanimals = new ArrayList<AcAnimal>();
 	ArrayList<AcAnimal> movingAnimals = new ArrayList<AcAnimal>();
@@ -55,7 +55,7 @@ public class Run extends PApplet {
 	private boolean waiting = false;
 	
 	public void setup() {
-		size(1024,768,OPENGL);
+		size(1920,1200,OPENGL);
 		
 		Core.p5 = this;
 		
@@ -154,7 +154,7 @@ public class Run extends PApplet {
 		for (Iterator<AcAnimal> iterator = animals.iterator(); iterator.hasNext();) {
 			AcAnimal a = iterator.next();
 			if(!a.isMoving()){
-				a.setTarget(new PVector(random(width),height));
+				a.setTarget(new PVector(random(width),400));
 			}
 			
 		}
