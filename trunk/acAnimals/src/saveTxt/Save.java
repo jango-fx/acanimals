@@ -37,7 +37,8 @@ public class Save {
 	}
 	
 	public void addAnimal(int t1, float x1, float y1, int r1, int t2, float x2, float y2, int r2){
-		animalTxt.println(t1 +"\t"+ x1 +"\t"+ y1+"\t"+r1+"\t"+t2+"\t"+x2+"\t"+y2+"\t"+r2);	
+		animalTxt.println(t1 +"\t"+ x1 +"\t"+ y1+"\t"+r1+"\t"+t2+"\t"+x2+"\t"+y2+"\t"+r2);
+		animalTxt.flush();
 	}
 	
 	public void addMessage(String msg){

@@ -47,6 +47,7 @@ public class Run extends PApplet {
 	 Save saver = new Save(this, "proj");
 	
 	ArrayList<String> messageList = new ArrayList<String>();
+	ArrayList<String> newMessageList = new ArrayList<String>();
 
 	private boolean drawFinish = false;
 	private boolean waiting = false;
@@ -87,6 +88,8 @@ public class Run extends PApplet {
 	    }
 	    animals.addAll(newanimals);
 	    newanimals.clear();
+	    messageList.addAll(newMessageList);
+	    newMessageList.clear();
 	    for (Iterator<AcAnimal> i = animals.iterator(); i.hasNext();) {
 			AcAnimal ac =  i.next();
 			ac.update();
@@ -298,7 +301,7 @@ public class Run extends PApplet {
 		  
 		  if(theOscMessage.checkAddrPattern("/gruss")==true) {
 		    /* check if the typetag is the right one. */
-			  messageList.add(theOscMessage.get(0).stringValue());
+			  newMessageList.add(theOscMessage.get(0).stringValue());
 			  saver.addMessage(theOscMessage.get(0).stringValue());
 
 			  //msgTxt.close();
