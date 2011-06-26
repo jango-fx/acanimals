@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Timer;
 
+import org.apache.tools.ant.listener.AnsiColorLogger;
+
 import oscP5.OscMessage;
 
 import animalosc.AnimalOsc;
@@ -26,9 +28,9 @@ public class Run extends PApplet {
 	Boolean debug = false;
 	
 	ArrayList<PVector> points = new ArrayList<PVector>();
-	float letterScale = 28f;
-	float animalSize = 10f;
-	float whiteSpaceWidth = 30f;
+	float letterScale = 40f;
+	float animalSize = 0.2f;
+	float whiteSpaceWidth = 55f;
 	float whiteSpaceHeight = 20f;
 	float leftBorder = 20f;
 	float topBorder = 20f;
@@ -37,7 +39,7 @@ public class Run extends PApplet {
 	ArrayList<AcAnimal> movingAnimals = new ArrayList<AcAnimal>();
 	ArrayList<String> displayMsg = new ArrayList<String>();
 	ArrayList<MLetter> currentWord = new ArrayList<MLetter>();
-	int animalCnt = 0;
+	int animalCnt = 300;
 	Timer nextTimer = new Timer();
 	Boolean gotoText = false;
 	int msgPos = 0;
@@ -53,7 +55,7 @@ public class Run extends PApplet {
 	private boolean waiting = false;
 	
 	public void setup() {
-		size(1280,720,OPENGL);
+		size(1920,1080,OPENGL);
 		
 		Core.p5 = this;
 		
@@ -73,7 +75,7 @@ public class Run extends PApplet {
 		 
 		 createMessage(messageList.get(0));
 		 
-		 Monster.f=0.15f;
+		 Monster.f=animalSize;
 	}
 
 	public void draw() {
