@@ -17,6 +17,7 @@ import monster.Monster;
 
 import processing.core.PApplet;
 import processing.core.PVector;
+import saveTxt.Save;
 
 
 public class Run extends PApplet {
@@ -42,8 +43,8 @@ public class Run extends PApplet {
 	int msgPos = 0;
 	
 	HashMap<String, Boolean[][]> mAlphabet = new HashMap<String, Boolean[][]>();
-	PrintWriter msgTxt;
-	 
+
+	 Save saver = new Save(this, "proj");
 	
 	ArrayList<String> messageList = new ArrayList<String>();
 
@@ -57,22 +58,17 @@ public class Run extends PApplet {
 		
 		osc = new AnimalOsc(this, 12000);
 		
-		String[] msgs = loadStrings("messages.txt");
-		msgTxt = createWriter("messages.txt");
-		for (int i = 0; i < msgs.length; i++) {
-			msgTxt.println(msgs[i]);
-		}
-		msgTxt.flush();
+		saver.initSaver();
+		
 	//	 RG.init(this);
 		 
 		 createLetters();
 		 setupAnimals();
 		 
-		 initMessages();
 		 
-		 messageList.add("sommerfest test");
-		 messageList.add("und das ist auch ein fest");
-
+		 //messageList.add("sommerfest test");
+		 //messageList.add("und das ist auch ein fest");
+		 messageList.addAll(saver.getMessages());
 		 
 		 createMessage(messageList.get(0));
 		 
@@ -131,11 +127,7 @@ public class Run extends PApplet {
 	}
 	
 	
-	private void initMessages(){
-		String[] msg = loadStrings("messages.txt");
-		
-		println("msg cnt: "+msg.length);
-	}
+	
 	
 	private void createWordPoints(){
 		points.clear();
@@ -307,8 +299,8 @@ public class Run extends PApplet {
 		  if(theOscMessage.checkAddrPattern("/gruss")==true) {
 		    /* check if the typetag is the right one. */
 			  messageList.add(theOscMessage.get(0).stringValue());
-			  msgTxt.println(theOscMessage.get(0).stringValue());
-			  msgTxt.flush();
+			  saver.addMessage(theOscMessage.get(0).stringValue());
+
 			  //msgTxt.close();
 		      return;
 		    }else if(theOscMessage.checkAddrPattern("/animal")==true){
@@ -321,6 +313,7 @@ public class Run extends PApplet {
 		    	 float y2 = Float.valueOf(theOscMessage.get(6).stringValue()).floatValue();
 		    	 int r2 =Integer.parseInt(theOscMessage.get(7).stringValue());
 		    	 newanimals.add(new AcAnimal(this, t1, x1, y1, r1, t2, x2, y2, r2));
+		    	 saver.addAnimal(t1, x1, y1, r1, t2, x2, y2, r2);
 		      return;
 		    } 
 		  println("### received an osc message. with address pattern "+theOscMessage.addrPattern());
