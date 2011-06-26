@@ -1,0 +1,1 @@
+﻿package  {     import flash.events.Event;        public class AuswahlEvent extends Event{			            public function AuswahlEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false){            super(type, bubbles,cancelable);        }    }   }
