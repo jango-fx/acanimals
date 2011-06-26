@@ -55,7 +55,7 @@ public class Run extends PApplet {
 	private boolean waiting = false;
 	
 	public void setup() {
-		size(1920,1080,OPENGL);
+		size(1024,768,OPENGL);
 		
 		Core.p5 = this;
 		
