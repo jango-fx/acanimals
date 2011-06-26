@@ -7,6 +7,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Timer;
 
+import oscP5.OscMessage;
+
+import animalosc.AnimalOsc;
+
 import monster.Monster;
 
 
@@ -18,6 +22,8 @@ import processing.core.PVector;
 
 
 public class Run extends PApplet {
+	
+	AnimalOsc osc;
 	Boolean debug = false;
 	
 	ArrayList<PVector> points = new ArrayList<PVector>();
@@ -28,10 +34,11 @@ public class Run extends PApplet {
 	float leftBorder = 20f;
 	float topBorder = 20f;
 	ArrayList<AcAnimal> animals = new ArrayList<AcAnimal>();
+	ArrayList<AcAnimal> newanimals = new ArrayList<AcAnimal>();
 	ArrayList<AcAnimal> movingAnimals = new ArrayList<AcAnimal>();
 	ArrayList<String> displayMsg = new ArrayList<String>();
 	ArrayList<MLetter> currentWord = new ArrayList<MLetter>();
-	int animalCnt = 200;
+	int animalCnt = 0;
 	Timer nextTimer = new Timer();
 	Boolean gotoText = false;
 	int msgPos = 0;
@@ -48,6 +55,8 @@ public class Run extends PApplet {
 		size(1280,720,OPENGL);
 		
 		Core.p5 = this;
+		
+		osc = new AnimalOsc(this, 12000);
 		
 		 RG.init(this);
 		 
@@ -73,6 +82,8 @@ public class Run extends PApplet {
 	        ellipse(points.get(i).x, points.get(i).y,5,5);  
 	      }
 	    }
+	    animals.addAll(newanimals);
+	    newanimals.clear();
 	    for (Iterator<AcAnimal> i = animals.iterator(); i.hasNext();) {
 			AcAnimal ac =  i.next();
 			ac.update();
@@ -141,6 +152,7 @@ public class Run extends PApplet {
 	private void setupAnimals(){
 		for (int i = 0; i < animalCnt; i++) {
 			animals.add(new AcAnimal(Core.p5, 0, random(50, width-50), random(50,height-50), (int)random(3)*90, 0, 71, random(-14,14), (int)random(3)*90));
+
 		}
 	}
 	
@@ -276,5 +288,27 @@ public class Run extends PApplet {
 	public static void main(String _args[]) {
 		  PApplet.main(new String[] { "--present", Run.class.getName() });
 	}
+	
+	public void oscEvent(OscMessage theOscMessage) {
+		  
+		  if(theOscMessage.checkAddrPattern("/gruss")==true) {
+		    /* check if the typetag is the right one. */
+			  messageList.add(theOscMessage.get(0).stringValue());
+		      return;
+		    }else if(theOscMessage.checkAddrPattern("/animal")==true){
+		    	 int t1 = Integer.parseInt(theOscMessage.get(0).stringValue());
+		    	 float x1 = Float.valueOf(theOscMessage.get(1).stringValue()).floatValue();
+		    	 float y1 = Float.valueOf(theOscMessage.get(2).stringValue()).floatValue();
+		    	 int r1 = Integer.parseInt(theOscMessage.get(3).stringValue());
+		    	 int t2 = Integer.parseInt(theOscMessage.get(4).stringValue());
+		    	 float x2 = Float.valueOf(theOscMessage.get(5).stringValue()).floatValue();
+		    	 float y2 = Float.valueOf(theOscMessage.get(6).stringValue()).floatValue();
+		    	 int r2 =Integer.parseInt(theOscMessage.get(7).stringValue());
+		    	 
+		    	 newanimals.add(new AcAnimal(this, t1, x1, y1, r1, t2, x2, y2, r2));
+		      return;
+		    } 
+		  println("### received an osc message. with address pattern "+theOscMessage.addrPattern());
+		}
 	
 }
