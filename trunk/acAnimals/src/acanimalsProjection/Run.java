@@ -286,6 +286,10 @@ public class Run extends PApplet {
 		mAlphabet.put("?", new Boolean[][]{ { true, false, false, false, false}, { true, false, true, false, true}, { true, true, true, false, false} });
 		mAlphabet.put(".", new Boolean[][]{ { false, false, false, false, true} }); 
 		mAlphabet.put(",", new Boolean[][]{ { false, false, false, true, true} });
+		mAlphabet.put("Š", new Boolean[][]{ { false, true, true, true, true}, {true, true, false, true, false}, {true, true, false, true, false},{false, true, true, true, true} });
+		mAlphabet.put("Ÿ", new Boolean[][]{ { true, false, true, true, true},{false, false, false, false, true}, { true, false, true, true, true}});
+		mAlphabet.put("š", new Boolean[][]{{ true, false, true, true, true},{false, false, true, false, true}, { true, false, true, true, true}});
+		mAlphabet.put("/", new Boolean[][]{{ false, false, false, false, true}, {false, false, false, true, false}, {false, false, true, false, false},	{false, true, false, false, false}, {true, false, false, false, false}});
 	}
 	
 	
