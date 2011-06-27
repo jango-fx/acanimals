@@ -159,10 +159,17 @@ public class Run extends PApplet {
 		}
 	}
 	private void setupAnimals(){
-		for (int i = 0; i < animalCnt; i++) {
-			animals.add(new AcAnimal(Core.p5, 0, random(50, width-50), random(50,height-50), (int)random(3)*90, 0, 71, random(-14,14), (int)random(3)*90));
-
+//		for (int i = 0; i < animalCnt; i++) {
+//			//animals.add(new AcAnimal(Core.p5, 0, random(50, width-50), random(50,height-50), (int)random(3)*90, 0, 71, random(-14,14), (int)random(3)*90));
+//		}
+		println("animalSetup");
+		String[] animalData = saver.getAnimalData();
+		println(animalData);
+		for (int i = 0; i < animalData.length; i++) {
+			String[] singleAnimal = animalData[i].split("/t");
+			println(singleAnimal);
 		}
+		
 	}
 	
 	private ArrayList<String> msgToWords(String msg){
@@ -306,28 +313,36 @@ public class Run extends PApplet {
 		  
 		  if(theOscMessage.checkAddrPattern("/gruss")==true) {
 		    /* check if the typetag is the right one. */
-//			  newMessageList.add(theOscMessage.get(0).stringValue());
-			  try{
-				  newMessageList.add(URLDecoder.decode(theOscMessage.get(0).stringValue(),"UTF-8"));
-			  }catch(UnsupportedEncodingException er){
-				  System.out.println(er);
-			  }
+			  newMessageList.add(theOscMessage.get(0).stringValue());
+			  println(theOscMessage.get(0).stringValue());
+//			  try{
+//				  newMessageList.add(URLDecoder.decode(theOscMessage.get(0).stringValue(),"UTF-8"));
+//			  }catch(UnsupportedEncodingException er){
+//				  System.out.println(er);
+//			  }
 
 			  saver.addMessage(theOscMessage.get(0).stringValue());
 
 			  //msgTxt.close();
 		      return;
 		    }else if(theOscMessage.checkAddrPattern("/animal")==true){
+		    	println(theOscMessage.arguments());
 		    	 int t1 = Integer.parseInt(theOscMessage.get(0).stringValue());
 		    	 float x1 = Float.valueOf(theOscMessage.get(1).stringValue()).floatValue();
 		    	 float y1 = Float.valueOf(theOscMessage.get(2).stringValue()).floatValue();
-		    	 int r1 = Integer.parseInt(theOscMessage.get(3).stringValue());
-		    	 int t2 = Integer.parseInt(theOscMessage.get(4).stringValue());
-		    	 float x2 = Float.valueOf(theOscMessage.get(5).stringValue()).floatValue();
-		    	 float y2 = Float.valueOf(theOscMessage.get(6).stringValue()).floatValue();
-		    	 int r2 =Integer.parseInt(theOscMessage.get(7).stringValue());
-		    	 newanimals.add(new AcAnimal(this, t1, x1, y1, r1, t2, x2, y2, r2));
-		    	 saver.addAnimal(t1, x1, y1, r1, t2, x2, y2, r2);
+		    	 int r1 = Integer.parseInt(theOscMessage.get(1).stringValue());
+		    	 int t2 = Integer.parseInt(theOscMessage.get(2).stringValue());
+		    	 float x2 = Float.valueOf(theOscMessage.get(3).stringValue()).floatValue();
+		    	 float y2 = Float.valueOf(theOscMessage.get(4).stringValue()).floatValue();
+		    	 int r2 = Integer.parseInt(theOscMessage.get(7).stringValue());
+		    	 int aT1 = Integer.parseInt(theOscMessage.get(8).stringValue());
+		    	float a1x = Float.valueOf(theOscMessage.get(9).stringValue()).floatValue();
+		    	float a1y = Float.valueOf(theOscMessage.get(10).stringValue()).floatValue();
+		    	int aT2 = Integer.parseInt(theOscMessage.get(11).stringValue());
+		    	float a2x =  Float.valueOf(theOscMessage.get(12).stringValue()).floatValue();
+		    	float a2y = Float.valueOf(theOscMessage.get(13).stringValue()).floatValue();
+		    	 newanimals.add(new AcAnimal(this, t1, x1, y1, r1, t2, x2, y2, r2, aT1, a1x, a1y, aT2, a2x, a2y));
+		    	 saver.addAnimal(t1, x1, y1, r1, t2, x2, y2, r2, aT1, a1x, a1y, aT2, a2x, a2y);
 		      return;
 		    } 
 		  println("### received an osc message. with address pattern "+theOscMessage.addrPattern());
