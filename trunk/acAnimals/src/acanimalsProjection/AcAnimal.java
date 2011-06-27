@@ -17,8 +17,8 @@ public class AcAnimal extends Monster{
 	private float arriveDist = speed-1;
 //	private RShape gfx;
 	
-	public AcAnimal(PApplet parent, int t1, float x1, float y1, int r1, int t2, float x2, float y2, int r2){
-		super(parent, t1,x1,y1,r1,t2,x2,y2,r2);
+	public AcAnimal(PApplet parent, int t1, float x1, float y1, int r1, int t2, float x2, float y2, int r2, int aT1, float a1x, float a1y, int aT2, float a2x, float a2y){
+		super(parent, t1,x1,y1,r1,t2,x2,y2,r2, aT1, new PVector(a1x, a1y), aT2, new PVector(a2x, a2y));
 		p5 = Core.p5;
 //		gfx = RG.loadShape("../data/testtierchen.svg");
 //		gfx.scale(0.15f);
