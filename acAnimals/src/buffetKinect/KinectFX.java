@@ -1,24 +1,27 @@
 package buffetKinect;
 
-import processing.opengl.*;
-import org.openkinect.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import org.openkinect.processing.*;
 import processing.core.*;
-
-import javax.media.opengl.*;
 
 public class KinectFX
 {
 	PApplet app;
 	Kinect kinect;
 	float[] depthLookUp = new float[2048];
+	int skip = 4;
+	
+	ArrayList<PVector> teller;
+	
 
-	float depthMin = 800;
-	float depthMax = 950;
+	float depthMin = 800.52f;
+	float depthMax = 824.07f;
 
-	float xOffset = 600;
-	float yOffset = 500;
-	float factor = 800;
+	float xOffset = 0.00f;
+	float yOffset = 0.00f;
+	float factor = 2.50f;
 
 	KinectFX(PApplet a)
 	{
@@ -26,7 +29,7 @@ public class KinectFX
 		kinect = new Kinect(app);
 		kinect.start();
 		kinect.enableDepth(true);
-		kinect.processDepthImage(false); // Effiezienzsteigerung
+		kinect.processDepthImage(false); // Performance-Steigerung
 
 		for (int i = 0; i < depthLookUp.length; i++)
 		{
@@ -36,9 +39,30 @@ public class KinectFX
 
 	void draw()
 	{
+
+		Iterator<PVector> iterator = teller.iterator();
+
+		while (iterator.hasNext())
+		{
+			PVector punkt = iterator.next();
+
+			Core.p5.pushMatrix();
+			Core.p5.translate(punkt.x, punkt.y, 0);
+
+			Core.p5.strokeWeight(3);
+			Core.p5.stroke(255, 0, 0);
+
+			Core.p5.point(0, 0);
+			Core.p5.popMatrix();
+		}
+	}
+
+	void update()
+	{
+		teller = new ArrayList<PVector>();
+
 		Core.p5.pushMatrix();
 		int[] depth = kinect.getRawDepth();
-		int skip = 4;
 		for (int x = 0; x < 640; x += skip)
 		{
 			for (int y = 0; y < 480; y += skip)
@@ -47,26 +71,28 @@ public class KinectFX
 
 				// Convert kinect data to world xyz coordinate
 				int rawDepth = depth[offset];
-				// Core.p5.println(depthMin);
-				Core.p5.stroke(0, 0, 200);
 
-				if (rawDepth > depthMin && rawDepth < depthMax)
-				{
-					Core.p5.stroke(0, 200, 200);
-				}
-				PVector v = depthToWorld(640 - x, y, rawDepth);
+				// PVector v = depthToWorld(640 - x, y, rawDepth);
 
 				Core.p5.pushMatrix();
-				// Scale up by 200
-				Core.p5.translate(xOffset + (v.x * factor), yOffset
-						+ (v.y * factor), factor - v.z * factor);
-				// Draw a point
-				// Core.p5.point(0, 0);
-				Core.p5.ellipse(0, 0, 5, 5);
+
+				// Core.p5.translate(xOffset + (v.x * factor), yOffset + (v.y *
+				// factor), factor - v.z * factor);
+				Core.p5.translate(xOffset + (x * factor), yOffset + (y * factor), 0);
+
+				Core.p5.stroke(0, 0, 255, 100);
+				if (rawDepth > depthMin && rawDepth < depthMax)
+				{
+					teller.add(new PVector(xOffset + (x * factor), yOffset + (y * factor), 0));
+				}
+
+				Core.p5.strokeWeight(3);
+				Core.p5.point(0, 0);
 				Core.p5.popMatrix();
 			}
 		}
 		Core.p5.popMatrix();
+		draw();
 	}
 
 	// These functions come from:
