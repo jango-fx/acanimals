@@ -23,6 +23,18 @@ public class Save {
 		String[] msgs = p5.loadStrings(prefix+"_messages.txt");
 		String[] anims = p5.loadStrings(prefix+"_animals.txt");
 		
+		for (int i = 0; i < msgs.length; i++) {
+			 try{
+					byte[] e=msgs[i].getBytes();
+					String v=new String(e,"utf-8");
+					byte[] f=v.getBytes("iso-8859-2");
+					String w=new String(f);
+					msgs[i]=w;
+				    }
+				    catch (Exception e){
+				     //println("error");
+				   }
+		}
 		msgTxt = p5.createWriter(prefix+"_messages.txt");
 		for (int i = 0; i < msgs.length; i++) {
 			msgTxt.println(msgs[i]);
