@@ -1,5 +1,6 @@
 package buffetKinect;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import monster.Monster;
@@ -8,14 +9,14 @@ import processing.core.*;
 public class MonsterRunner extends Monster
 {
 	public PVector vel, acc;
-	public MonsterRunner[] neighbours;
+	public ArrayList<MonsterRunner> neighbours;
 
 	MonsterRunner(int t1, float x1, float y1, int r1, int t2, float x2, float y2, int r2, int aT1, PVector a1, int aT2, PVector a2)
 	{
 		super(Core.p5, t1, x1, y1, r1, t2, x2, y2, r2, aT1, a1, aT2, a2);
 	}
 
-	MonsterRunner(MonsterRunner[] n, int t1, float x1, float y1, int r1, int t2, float x2, float y2, int r2, int aT1, PVector a1, int aT2, PVector a2)
+	MonsterRunner(ArrayList<MonsterRunner> n, int t1, float x1, float y1, int r1, int t2, float x2, float y2, int r2, int aT1, PVector a1, int aT2, PVector a2)
 	{
 		super(Core.p5, t1, x1, y1, r1, t2, x2, y2, r2, aT1, a1, aT2, a2);
 
@@ -89,20 +90,21 @@ public class MonsterRunner extends Monster
 
 	void checkNeighbours()
 	{
-		for (int i = 0; i < neighbours.length; i++)
+		for (int i = 0; i < neighbours.size(); i++)
 		{
-			if (neighbours[i] != this)
+			MonsterRunner n = neighbours.get(i);
+			if (n != this)
 			{
-				PVector tmpAcc = new PVector(neighbours[i].pos.x, neighbours[i].pos.y);
+				PVector tmpAcc = new PVector(n.pos.x, n.pos.y);
 				tmpAcc.sub(pos);
 				tmpAcc.normalize();
 				tmpAcc.mult(12);
 				acc.add(tmpAcc);
-				if (PApplet.dist(pos.x, pos.y, neighbours[i].pos.x, neighbours[i].pos.y) < 98 * 2 * f)
+				if (PApplet.dist(pos.x, pos.y, n.pos.x, n.pos.y) < 98 * 2 * f)
 				{
 					PVector tmpVel = new PVector(vel.x, vel.y);
-					neighbours[i].vel.set(vel);
-					neighbours[i].vel.mult(.0f);
+					n.vel.set(vel);
+					n.vel.mult(.0f);
 					// neighbours[i].pos.add(vel);
 					vel.set(tmpVel);
 					vel.mult(.9f);
