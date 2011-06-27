@@ -2,8 +2,6 @@ package monster;
 
 import javax.media.opengl.GL;
 
-import buffet.Core;
-
 import processing.core.*;
 import processing.opengl.PGraphicsOpenGL;
 
@@ -33,6 +31,8 @@ public class MonsterBody {
 	    case 1: drawC();
 	      break;
 	    case 2: drawPlus();
+	      break;
+	    case 3: drawPlus2();
 	      break;
 	    }
 	    p.popMatrix();
@@ -165,5 +165,38 @@ public class MonsterBody {
 	    //============================
 	    gl.glEnd( );
 	    pgl.endGL();
+	  }
+	  void drawPlus2()
+	  {
+		  PGraphicsOpenGL pgl = (PGraphicsOpenGL) p.g;
+		    GL gl = pgl.beginGL();
+		    gl.glBegin(GL.GL_TRIANGLES);
+		    //============================
+		    gl.glVertex2f(  0.0f,  0.0f);
+		    gl.glVertex2f( 26.0f,  0.0f);
+		    gl.glVertex2f(  0.0f, 98.0f);
+		    ////----------------------------
+		    gl.glVertex2f( 26.0f,  0.0f);  
+		    gl.glVertex2f( 26.0f, 98.0f);
+		    gl.glVertex2f(  0.0f, 98.0f);
+		    //============================
+		    gl.glVertex2f( 26.0f,  0.0f);
+		    gl.glVertex2f( 71.0f,  0.0f);
+		    gl.glVertex2f( 26.0f, 45.0f);
+		    ////----------------------------
+		    gl.glVertex2f( 26.0f, 45.0f);
+		    gl.glVertex2f( 71.0f,  0.0f);
+		    gl.glVertex2f( 71.0f, 45.0f);
+		    //============================
+		    gl.glVertex2f( 26.0f, 53.0f);
+		    gl.glVertex2f( 71.0f, 53.0f);
+		    gl.glVertex2f( 26.0f, 98.0f);
+		    ////----------------------------
+		    gl.glVertex2f( 26.0f, 98.0f);
+		    gl.glVertex2f( 71.0f, 53.0f);
+		    gl.glVertex2f( 71.0f, 98.0f);
+		    //============================
+		    gl.glEnd( );
+		    pgl.endGL();
 	  }
 	}
