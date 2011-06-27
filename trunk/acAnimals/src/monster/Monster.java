@@ -12,7 +12,7 @@ public class Monster
 	  
 	MonsterEye leftEye, rightEye;
 	
-	protected static float f = 0.3f;
+	public static float f = 0.3f;
 
 
 	  
@@ -29,7 +29,7 @@ public class Monster
 		rightEye = new MonsterEye(p, aT2, a2);
 	}
 
-	protected void update()
+	public void update()
 	{
 		draw();
 	}
