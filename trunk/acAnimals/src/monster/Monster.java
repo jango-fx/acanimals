@@ -4,44 +4,53 @@ import processing.core.*;
 
 public class Monster
 {
-	  //  float width, height;
-	  protected PVector pos;
-
+	PApplet p;
+	
+	MonsterBody main, sub;
+	protected PVector pos;
 	  PVector subPos;
 	  
- 
-	  MonsterBody main, sub;
-	  PApplet p;
-	  public static float f=0.3f;
+	MonsterEye leftEye, rightEye;
+	
+	protected static float f = 0.3f;
+
+
 	  
-	  protected Monster(PApplet parent, int t1, float x1, float y1, int r1, int t2, float x2, float y2, int r2)
-	  {
+	protected Monster(PApplet parent, int t1, float x1, float y1, int r1, int t2, float x2, float y2, int r2, int aT1, PVector a1, int aT2, PVector a2)
+	{
 		p = parent;
-	    pos = new PVector(x1, y1);
-	    subPos = new PVector(x2, y2);
+		pos = new PVector(x1, y1);
+		subPos = new PVector(x2, y2);
 
-	    main = new MonsterBody(p, t1, r1);
-	    sub = new MonsterBody(p, t2, r2);
-	  }
+		main = new MonsterBody(p, t1, r1);
+		sub = new MonsterBody(p, t2, r2);
+		
+		leftEye = new MonsterEye(p, aT1, a1);
+		rightEye = new MonsterEye(p, aT2, a2);
+	}
 
-	  public void update()
-	  {
-	    draw();
-	  }
+	protected void update()
+	{
+		draw();
+	}
 
-	  protected void draw()
+
+  protected void draw()
 	  { 
 		  
-		  p.pushMatrix();
+	 p.pushMatrix();
 
-		  p.translate(pos.x, pos.y);
-		  p.scale(f);
-	    main.draw();
+		p.translate(pos.x, pos.y);
+		p.scale(f);
+		main.draw();
 
-	    p.translate(subPos.x, subPos.y);
-	    sub.draw();
+		p.translate(subPos.x, subPos.y);
+		sub.draw();
 
-	    p.popMatrix();
-	  }
+		leftEye.draw();
+		rightEye.draw();
+		
+		p.popMatrix();
 	  
 	}
+}
