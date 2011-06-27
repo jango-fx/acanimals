@@ -1,5 +1,7 @@
 package acanimalsProjection;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -304,7 +306,13 @@ public class Run extends PApplet {
 		  
 		  if(theOscMessage.checkAddrPattern("/gruss")==true) {
 		    /* check if the typetag is the right one. */
-			  newMessageList.add(theOscMessage.get(0).stringValue());
+//			  newMessageList.add(theOscMessage.get(0).stringValue());
+			  try{
+				  newMessageList.add(URLDecoder.decode(theOscMessage.get(0).stringValue(),"UTF-8"));
+			  }catch(UnsupportedEncodingException er){
+				  System.out.println(er);
+			  }
+
 			  saver.addMessage(theOscMessage.get(0).stringValue());
 
 			  //msgTxt.close();
