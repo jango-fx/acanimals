@@ -1,11 +1,7 @@
 package buffetKinect;
 
 import processing.core.PApplet;
-import processing.opengl.*;
-import javax.media.opengl.*;
-import controlP5.*;
-import org.openkinect.*;
-import org.openkinect.processing.*;
+import processing.core.PVector;
 
 public class Run extends PApplet
 {
@@ -30,7 +26,7 @@ public class Run extends PApplet
 
 		for (int i = 0; i < mo.length; i++)
 		{
-			mo[i] = new MonsterRunner(mo, 0, random(50, width - 50), random(50, height - 50), (int) random(3) * 90, 0, 71, random(-14, 14), (int) random(3) * 90);
+			mo[i] = new MonsterRunner(mo, 0, random(50, width - 50), random(50, height - 50), (int) random(3) * 90, (0/71)*	0, (71/71)*71, random(-14, 14), (int) random(3) * 90, (int) random(8), new PVector(10,10,0), (int) random(8), new PVector(40,10,0));
 			// mo[i] = new Monster(mo, int(random(3))*90, random(500, 7500),
 			// random(500,5500), int(random(3))*90, int(random(3)), 71,
 			// random(-14,14), int(random(3))*90);
@@ -45,11 +41,11 @@ public class Run extends PApplet
 
 		// scale(0.1);
 
-		kinect.draw();
+		kinect.update();
 
 		for (int i = 0; i < mo.length; i += 1)
 		{
-			mo[i].update();
+			mo[i].update(kinect);
 		}
 	}
 	
