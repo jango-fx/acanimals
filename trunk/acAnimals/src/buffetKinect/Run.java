@@ -36,7 +36,7 @@ public class Run extends PApplet
 
 		for (int i = 0; i < 100; i++)
 		{
-			mo.add(new MonsterRunner(mo, 0, random(50, width - 50), random(50, height - 50), (int) random(3) * 90, 0, (71/71) *71, (random(-14, 14)/71) *71, (int) random(3) * 90, (int) random(8), new PVector(10, 10, 0), (int) random(8), new PVector(40, 10, 0)));
+			mo.add(new MonsterRunner(mo, 0, random(50, width - 50), random(50, height - 50), (int) random(3) * 90, 0, (71/71), (random(-14, 14)/71), (int) random(3) * 90, (int) random(8), new PVector(10, 10, 0), (int) random(8), new PVector(40, 10, 0)));
 		}
 	}
 
