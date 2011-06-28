@@ -8,7 +8,7 @@ import processing.core.*;
 
 public class MonsterRunner extends Monster
 {
-	public PVector vel, acc;
+	public PVector vel, acc = new PVector();
 	public ArrayList<MonsterRunner> neighbours;
 
 	MonsterRunner(int t1, float x1, float y1, int r1, int t2, float x2, float y2, int r2, int aT1, PVector a1, int aT2, PVector a2)
@@ -24,26 +24,31 @@ public class MonsterRunner extends Monster
 		neighbours = n;
 	}
 
+	
 	protected void update(KinectFX kinect)
 	{
 		move(kinect);
 		super.draw();
 	}
 
+	
 	void move(KinectFX kinect)
 	{
-		float a = 0.6f;
+		float a = 0.1f;
 		acc = new PVector(Core.p5.random(-a, a), Core.p5.random(-a, a));
 
-		// PVector fric = new PVector(vel.x*-0.01f, vel.y*-0.01f);
-		// acc.add(fric);
+		PVector fric = new PVector(vel.x * -0.01f, vel.y * -0.01f);
+		acc.add(fric);
+		if(kinect != null)
 		checkKinect(kinect);
-		vel.add(acc);
-		// constrain(vel.x, -0.5, 0.5);
-		// constrain(vel.y, -0.5, 0.5);
-		checkBoundaries();
 		checkNeighbours();
-		
+
+		vel.add(acc);
+
+
+		checkBoundaries();
+		PApplet.constrain(vel.x, -0.05f, 0.05f);
+		PApplet.constrain(vel.y, -0.05f, 0.05f);
 		pos.add(vel);
 	}
 
@@ -55,8 +60,8 @@ public class MonsterRunner extends Monster
 		while (iterator.hasNext())
 		{
 			PVector punkt = iterator.next();
-			
-			if (PApplet.dist(pos.x, pos.y, punkt.x, punkt.y) < (98 * 2 * f)+(kinect.skip*kinect.factor))
+
+			if (PApplet.dist(pos.x, pos.y, punkt.x, punkt.y) < (98 * 2 * f) + (kinect.skip * kinect.factor))
 			{
 				PVector v = new PVector(punkt.x, punkt.y, 0);
 				v.sub(pos);
@@ -65,7 +70,7 @@ public class MonsterRunner extends Monster
 				acc.add(v);
 			}
 		}
-		
+
 	}
 
 	void checkBoundaries()
@@ -98,17 +103,25 @@ public class MonsterRunner extends Monster
 				PVector tmpAcc = new PVector(n.pos.x, n.pos.y);
 				tmpAcc.sub(pos);
 				tmpAcc.normalize();
-				tmpAcc.mult(12);
+				tmpAcc.mult((float) (1 / Math.pow(PApplet.dist(pos.x, pos.y, n.pos.x, n.pos.y), 2))*2);
 				acc.add(tmpAcc);
-				if (PApplet.dist(pos.x, pos.y, n.pos.x, n.pos.y) < 98 * 2 * f)
+				if (PApplet.dist(pos.x, pos.y, n.pos.x, n.pos.y) < Math.sqrt(Math.pow(98,2)+Math.pow(71, 2))*0.5 * f)
 				{
-					PVector tmpVel = new PVector(vel.x, vel.y);
-					n.vel.set(vel);
-					n.vel.mult(.0f);
-					// neighbours[i].pos.add(vel);
-					vel.set(tmpVel);
-					vel.mult(.9f);
-					// pos.add(vel);
+					float damping = 0.3f;
+					 PVector tmpVel = new PVector(vel.x, vel.y);
+					 vel.set(n.vel);
+					 vel.mult(damping);
+					 // neighbours[i].pos.add(vel);
+					 n.vel.set(tmpVel);
+					 n.vel.mult(damping);
+					 
+					PVector v = new PVector(n.pos.x, n.pos.y, 0);
+					v.sub(pos);
+					v.normalize();
+					v.mult(.5f); // halbe Distanz
+					n.pos.add(v);
+					v.mult(-1);
+					pos.add(v);
 				}
 			}
 		}
