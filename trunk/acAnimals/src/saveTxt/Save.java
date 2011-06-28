@@ -25,6 +25,7 @@ public class Save {
 	public void initSaver(){
 		String[] msgs = p5.loadStrings(messageFile);
 		String[] anims = p5.loadStrings(animalFile);
+		PApplet.println(anims);
 		
 		msgTxt = p5.createWriter(messageFile);
 		for (int i = 0; i < msgs.length; i++) {
@@ -40,7 +41,7 @@ public class Save {
 	}
 	
 	public void addAnimal(int t1, float x1, float y1, int r1, int t2, float x2, float y2, int r2, int aT1, float a1x, float a1y, int aT2, float a2x, float a2y){
-		animalTxt.println(t1 +"\t"+ x1 +"\t"+ y1+"\t"+r1+"\t"+t2+"\t"+x2+"\t"+y2+"\t"+r2+"\t"+aT1+"\t"+"\t"+a1x+"\t"+a1y+"\t"+aT2+"\t"+a2x+"\t"+a2y);
+		animalTxt.println(t1 +"\t"+ x1 +"\t"+ y1+"\t"+r1+"\t"+t2+"\t"+x2+"\t"+y2+"\t"+r2+"\t"+aT1+"\t"+a1x+"\t"+a1y+"\t"+aT2+"\t"+a2x+"\t"+a2y);
 		animalTxt.flush();
 	}
 	
