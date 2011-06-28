@@ -25,7 +25,6 @@ public class Save {
 	public void initSaver(){
 		String[] msgs = p5.loadStrings(messageFile);
 		String[] anims = p5.loadStrings(animalFile);
-		PApplet.println(anims);
 		
 		msgTxt = p5.createWriter(messageFile);
 		for (int i = 0; i < msgs.length; i++) {
