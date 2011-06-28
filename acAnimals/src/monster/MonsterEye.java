@@ -21,8 +21,8 @@ public class MonsterEye
 	MonsterEye(PApplet p, int t, PVector v)
 	{
 		this.p = p;
-		x = v.x*71;
-		y = v.y*71;
+		x = v.x;
+		y = v.y;
 		a = v.z;
 		type = t;
 	}
