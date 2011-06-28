@@ -167,7 +167,23 @@ public class Run extends PApplet {
 		println(animalData);
 		for (int i = 0; i < animalData.length; i++) {
 			String[] singleAnimal = animalData[i].split("/t");
-			println(singleAnimal);
+			println(singleAnimal.length);
+			 int t1 = Integer.parseInt(singleAnimal[0]);
+	    	 float x1 = Float.valueOf(singleAnimal[1]).floatValue();
+	    	 float y1 = Float.valueOf(singleAnimal[2]).floatValue();
+	    	 int r1 = Integer.parseInt(singleAnimal[3]);
+	    	 int t2 = Integer.parseInt(singleAnimal[4]);
+	    	 float x2 = Float.valueOf(singleAnimal[5]).floatValue();
+	    	 float y2 = Float.valueOf(singleAnimal[6]).floatValue();
+	    	 int r2 = Integer.parseInt(singleAnimal[7]);
+	    	 int aT1 = Integer.parseInt(singleAnimal[8]);
+	    	float a1x = Float.valueOf(singleAnimal[9]).floatValue();
+	    	float a1y = Float.valueOf(singleAnimal[10]).floatValue();
+	    	int aT2 = Integer.parseInt(singleAnimal[11]);
+	    	float a2x =  Float.valueOf(singleAnimal[12]).floatValue();
+	    	float a2y = Float.valueOf(singleAnimal[13]).floatValue();
+	    	animals.add(new AcAnimal(this, t1, x1, y1, r1, t2, x2, y2, r2, aT1, a1x, a1y, aT2, a2x, a2y));
+			//animals.add(new AcAnimal(this, singleAnimal[0], singleAnimal[1], singleAnimal[2], singleAnimal[3], singleAnimal[4], singleAnimal[5], singleAnimal[6], singleAnimal[6], singleAnimal[7], singleAnimal[8], singleAnimal[9], singleAnimal[10], singleAnimal[11], singleAnimal[12], ));
 		}
 		
 	}
@@ -330,10 +346,10 @@ public class Run extends PApplet {
 		    	 int t1 = Integer.parseInt(theOscMessage.get(0).stringValue());
 		    	 float x1 = Float.valueOf(theOscMessage.get(1).stringValue()).floatValue();
 		    	 float y1 = Float.valueOf(theOscMessage.get(2).stringValue()).floatValue();
-		    	 int r1 = Integer.parseInt(theOscMessage.get(1).stringValue());
-		    	 int t2 = Integer.parseInt(theOscMessage.get(2).stringValue());
-		    	 float x2 = Float.valueOf(theOscMessage.get(3).stringValue()).floatValue();
-		    	 float y2 = Float.valueOf(theOscMessage.get(4).stringValue()).floatValue();
+		    	 int r1 = Integer.parseInt(theOscMessage.get(3).stringValue());
+		    	 int t2 = Integer.parseInt(theOscMessage.get(4).stringValue());
+		    	 float x2 = Float.valueOf(theOscMessage.get(5).stringValue()).floatValue();
+		    	 float y2 = Float.valueOf(theOscMessage.get(6).stringValue()).floatValue();
 		    	 int r2 = Integer.parseInt(theOscMessage.get(7).stringValue());
 		    	 int aT1 = Integer.parseInt(theOscMessage.get(8).stringValue());
 		    	float a1x = Float.valueOf(theOscMessage.get(9).stringValue()).floatValue();
