@@ -164,10 +164,8 @@ public class Run extends PApplet {
 //		}
 		println("animalSetup");
 		String[] animalData = saver.getAnimalData();
-		println(animalData);
 		for (int i = 0; i < animalData.length; i++) {
-			String[] singleAnimal = animalData[i].split("/t");
-			println(singleAnimal.length);
+			String[] singleAnimal = animalData[i].split("\t");
 			 int t1 = Integer.parseInt(singleAnimal[0]);
 	    	 float x1 = Float.valueOf(singleAnimal[1]).floatValue();
 	    	 float y1 = Float.valueOf(singleAnimal[2]).floatValue();
@@ -330,7 +328,6 @@ public class Run extends PApplet {
 		  if(theOscMessage.checkAddrPattern("/gruss")==true) {
 		    /* check if the typetag is the right one. */
 			  newMessageList.add(theOscMessage.get(0).stringValue());
-			  println(theOscMessage.get(0).stringValue());
 //			  try{
 //				  newMessageList.add(URLDecoder.decode(theOscMessage.get(0).stringValue(),"UTF-8"));
 //			  }catch(UnsupportedEncodingException er){
@@ -342,7 +339,6 @@ public class Run extends PApplet {
 			  //msgTxt.close();
 		      return;
 		    }else if(theOscMessage.checkAddrPattern("/animal")==true){
-		    	println(theOscMessage.arguments());
 		    	 int t1 = Integer.parseInt(theOscMessage.get(0).stringValue());
 		    	 float x1 = Float.valueOf(theOscMessage.get(1).stringValue()).floatValue();
 		    	 float y1 = Float.valueOf(theOscMessage.get(2).stringValue()).floatValue();
