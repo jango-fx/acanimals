@@ -56,7 +56,6 @@ public class Save {
 	}
 	
 	public String[] getAnimalData(){
-		PApplet.println(p5.loadStrings(animalFile));
 		return p5.loadStrings(animalFile);
 	}
 	

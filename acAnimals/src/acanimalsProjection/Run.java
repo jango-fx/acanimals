@@ -17,6 +17,7 @@ import monster.Monster;
 
 
 import processing.core.PApplet;
+import processing.core.PImage;
 import processing.core.PVector;
 import saveTxt.Save;
 
@@ -42,6 +43,10 @@ public class Run extends PApplet {
 	Timer nextTimer = new Timer();
 	Boolean gotoText = false;
 	int msgPos = 0;
+	
+	PImage bg1;
+	PImage bg2;
+	PImage bg3;
 	
 	HashMap<String, Boolean[][]> mAlphabet = new HashMap<String, Boolean[][]>();
 
@@ -75,11 +80,15 @@ public class Run extends PApplet {
 		 createMessage(messageList.get(0));
 		 
 		 Monster.f=animalSize;
+		 
+		 bg1 = loadImage("data/hintergrund_1.png");
+		 bg2 = loadImage("data/hintergrund_2.png");
+		 bg3 = loadImage("data/hintergrund_3.png");
 	}
 
 	public void draw() {
 		background(0x1BBBE9);
-
+		image(bg1,0,0);
 		fill(0);
 	    stroke(0);
 	    if(debug){
@@ -105,7 +114,7 @@ public class Run extends PApplet {
 	}
 	
 	private void createMessage(String s){
-		println("message create");
+//		println("message create");
 		displayMsg = msgToWords(s);
 //		createPoints(s);
 		createCurrentWord(displayMsg.get(0));
@@ -162,7 +171,6 @@ public class Run extends PApplet {
 //		for (int i = 0; i < animalCnt; i++) {
 //			//animals.add(new AcAnimal(Core.p5, 0, random(50, width-50), random(50,height-50), (int)random(3)*90, 0, 71, random(-14,14), (int)random(3)*90));
 //		}
-		println("animalSetup");
 		String[] animalData = saver.getAnimalData();
 		for (int i = 0; i < animalData.length; i++) {
 			String[] singleAnimal = animalData[i].split("\t");
@@ -188,6 +196,7 @@ public class Run extends PApplet {
 	
 	private ArrayList<String> msgToWords(String msg){
 		ArrayList<String> words = new ArrayList<String>(Arrays.asList(msg.split(" ")));
+		println(words);
 		return words;
 	}
 	
@@ -358,6 +367,6 @@ public class Run extends PApplet {
 		      return;
 		    } 
 		  println("### received an osc message. with address pattern "+theOscMessage.addrPattern());
-		}
+	}
 	
 }
