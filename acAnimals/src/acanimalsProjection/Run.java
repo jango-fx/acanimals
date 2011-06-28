@@ -1,13 +1,14 @@
 package acanimalsProjection;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Timer;
+
+import fullscreen.FullScreen;
+import fullscreen.SoftFullScreen;
 
 import oscP5.OscMessage;
 
@@ -24,6 +25,7 @@ import saveTxt.Save;
 
 public class Run extends PApplet {
 	
+	SoftFullScreen fs;
 	AnimalOsc osc;
 	Boolean debug = false;
 	
@@ -43,7 +45,7 @@ public class Run extends PApplet {
 	Timer nextTimer = new Timer();
 	Boolean gotoText = false;
 	int msgPos = 0;
-	
+	PVector bgColor = new PVector(0, 50, 90);
 	PImage bg1;
 	PImage bg2;
 	PImage bg3;
@@ -84,11 +86,23 @@ public class Run extends PApplet {
 		 bg1 = loadImage("data/hintergrund_1.png");
 		 bg2 = loadImage("data/hintergrund_2.png");
 		 bg3 = loadImage("data/hintergrund_3.png");
+		 
+		 noCursor();
+		 fs = new SoftFullScreen(this); 
+		 fs.enter();
 	}
 
 	public void draw() {
-		background(0x1BBBE9);
-		image(bg1,0,0);
+		colorMode(HSB, 1000, 100, 100);
+		if(bgColor.x<1000){
+			bgColor.x++;
+		}else{
+			bgColor.x=0;
+		}
+		background(bgColor.x, bgColor.y, bgColor.z);
+		colorMode(RGB);
+		//background(0x1BBBE9);
+		//image(bg1,0,0);
 		fill(0);
 	    stroke(0);
 	    if(debug){
@@ -159,12 +173,24 @@ public class Run extends PApplet {
 				break;
 			}
 		}
-		for (Iterator<AcAnimal> iterator = animals.iterator(); iterator.hasNext();) {
-			AcAnimal a = iterator.next();
+//		for (Iterator<AcAnimal> iterator = animals.iterator(); iterator.hasNext();) {
+//			AcAnimal a = iterator.next();
+//			if(!a.isMoving()){
+//				
+//				a.setTarget(new PVector(random(width),400));
+//			}
+//			
+//		}
+		int anSize = animals.size();
+		for (int i = 0; i < anSize; i++) {
+			AcAnimal a = animals.get(i);
 			if(!a.isMoving()){
-				a.setTarget(new PVector(random(width),400));
+				if(i<=(int)anSize/2){
+					a.setTarget(new PVector(-100,random(200)));
+				}else{
+					a.setTarget(new PVector(width+100,random(200)));
+				}
 			}
-			
 		}
 	}
 	private void setupAnimals(){
@@ -239,6 +265,7 @@ public class Run extends PApplet {
 				}
 				createMessage(messageList.get(msgPos));
 			}else{
+				Collections.shuffle(animals);
 				for (Iterator<AcAnimal> iterator = animals.iterator(); iterator.hasNext();) {
 					AcAnimal a = iterator.next();
 					a.setTarget(new PVector(random(width), height));
@@ -328,9 +355,6 @@ public class Run extends PApplet {
 	public void removeMovingAnimal(AcAnimal a){
 		movingAnimals.remove(a);
 	}
-	public static void main(String _args[]) {
-		  PApplet.main(new String[] { "--present", Run.class.getName() });
-	}
 	
 	public void oscEvent(OscMessage theOscMessage) {
 		  
@@ -367,6 +391,10 @@ public class Run extends PApplet {
 		      return;
 		    } 
 		  println("### received an osc message. with address pattern "+theOscMessage.addrPattern());
+	}
+	
+	public static void main(String _args[]) {
+		  PApplet.main(new String[] { "--present", Run.class.getName() });
 	}
 	
 }

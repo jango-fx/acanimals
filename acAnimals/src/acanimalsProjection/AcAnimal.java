@@ -45,6 +45,9 @@ public class AcAnimal extends Monster{
 	
 	public void setTarget(PVector t){
 		p5.addMovingAnimal(this);
+		/*TODO: dist von pos zu target
+				speed = dist/steps
+		*/
 		target = t;
 		moving=true;
 	}
