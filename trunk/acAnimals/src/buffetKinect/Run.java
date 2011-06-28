@@ -8,22 +8,25 @@ import acanimalsProjection.AcAnimal;
 import animalosc.AnimalOsc;
 import processing.core.PApplet;
 import processing.core.PVector;
+import saveTxt.Save;
 
 public class Run extends PApplet
 {
 
 //	MonsterRunner[] mo = new MonsterRunner[100];
-	ArrayList mo = new ArrayList();
+	ArrayList<MonsterRunner> mo = new ArrayList();
 	AnimalOsc osc;
 	// ControlP5 controlP5;
 	// Range range;
 
 	KinectFX kinect;
+	Save saver = new Save(this, "buff");
 
 	public void setup()
 	{
 		Core.p5 = this;
 		osc = new AnimalOsc(this, 12000);
+		saver.initSaver();
 
 		size(1440, 900, OPENGL);
 		scale(0.1f);
@@ -33,11 +36,12 @@ public class Run extends PApplet
 		// controlP5 = new ControlP5(this);
 		// range = controlP5.addRange("rangeController", 0, 2048, 0, 2048, 20,
 		// height - 20, 200, 12);
-
-		for (int i = 0; i < 100; i++)
-		{
-			mo.add(new MonsterRunner(mo, 0, random(50, width - 50), random(50, height - 50), (int) random(3) * 90, 0, (71/71), (random(-14, 14)/71), (int) random(3) * 90, (int) random(8), new PVector(10, 10, 0), (int) random(8), new PVector(40, 10, 0)));
-		}
+		
+		loadAnimals();
+//		for (int i = 0; i < 100; i++)
+//		{
+//			mo.add(new MonsterRunner(mo, 0, random(50, width - 50), random(50, height - 50), (int) random(3) * 90, 0, (71/71), (random(-14, 14)/71), (int) random(3) * 90, (int) random(8), new PVector(10, 10, 0), (int) random(8), new PVector(40, 10, 0)));
+//		}
 	}
 
 	public void draw()
@@ -53,6 +57,35 @@ public class Run extends PApplet
 			monster.update(kinect);
 		}
 		
+	}
+	
+	private void loadAnimals()
+	{
+		String[] animalData = saver.getAnimalData();
+		println(animalData);
+		for (int i = 0; i < animalData.length; i++) {
+			String[] singleAnimal = animalData[i].split("/t");
+			for (int j = 0; j < singleAnimal.length; j++)
+			{
+				int t1 = Integer.parseInt(singleAnimal[0]);
+				float x1 = Float.valueOf(singleAnimal[1]);
+				float y1 = Integer.parseInt(singleAnimal[2]);
+				int r1 = Integer.parseInt(singleAnimal[3]);
+				int t2 = Integer.parseInt(singleAnimal[4]);
+				float x2 = Float.valueOf(singleAnimal[5]);
+				float y2 = Float.valueOf(singleAnimal[6]);
+				int r2 = Integer.parseInt(singleAnimal[7]);
+				int a1t = Integer.parseInt(singleAnimal[8]);
+				float a1x = Float.valueOf(singleAnimal[9]);
+				float a1y = Float.valueOf(singleAnimal[10]);
+				int a2t = Integer.parseInt(singleAnimal[11]);
+				float a2x = Float.valueOf(singleAnimal[12]);
+				float a2y = Float.valueOf(singleAnimal[13]);
+				
+				mo.add(new MonsterRunner(mo, t1, x1, y1, r1, t2, x2, y2, r2, a1t, new PVector(a1x, a1y), a2t, new PVector(a2x, a2y)));
+			}
+			println(singleAnimal);
+		}
 	}
 
 	public void oscEvent(OscMessage theOscMessage)
@@ -79,6 +112,7 @@ public class Run extends PApplet
 			float a2y = Float.valueOf(theOscMessage.get(13).stringValue()).floatValue();
 			
 			mo.add(new MonsterRunner(mo, t1, x1, y1, r1, t2, x2, y2, r2, a1t, new PVector(a1x, a1y), a2t, new PVector(a2x, a2y)));
+			saver.addAnimal(t1, x1, y1, r1, t2, x2, y2, r2, a1t, a1x, a1y, a2t, a2x, a2y);
 			return;
 		}
 		println("### received an osc message. with address pattern " + theOscMessage.addrPattern());
