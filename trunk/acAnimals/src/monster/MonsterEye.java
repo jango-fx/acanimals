@@ -60,8 +60,6 @@ public class MonsterEye
 		case 7:
 			drawEye_Squeezed();
 			break;
-		case 8:
-			break;
 		default:
 			break;
 		}
