@@ -83,7 +83,7 @@ public class KinectFX
 				Core.p5.stroke(0, 0, 255, 100);
 				if (rawDepth > depthMin && rawDepth < depthMax)
 				{
-					teller.add(new PVector(xOffset + (x * factor), yOffset + (y * factor), 0));
+					teller.add(new PVector(xOffset + ((640-x) * factor), yOffset + ((480-y) * factor), 0));
 				}
 
 				Core.p5.strokeWeight(3);

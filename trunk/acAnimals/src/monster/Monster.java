@@ -18,7 +18,7 @@ public class Monster
 	{
 		p = parent;
 		pos = new PVector(x1, y1);
-		subPos = new PVector(x2 * 71, y2 * 71);
+		subPos = new PVector(x2 * -71, y2 * -71);
 
 		main = new MonsterBody(p, t1, r1);
 		sub = new MonsterBody(p, t2, r2);
