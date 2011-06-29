@@ -8,7 +8,7 @@ public class NextMsg extends TimerTask {
 
 	@Override
 	public void run() {
-		Core.p5.nextMsg();
+		Core.p5.nextMessageTrue();
 	}
 
 }

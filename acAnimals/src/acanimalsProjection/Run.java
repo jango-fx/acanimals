@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Timer;
 
-import fullscreen.FullScreen;
 import fullscreen.SoftFullScreen;
 
 import oscP5.OscMessage;
@@ -30,12 +29,14 @@ public class Run extends PApplet {
 	Boolean debug = false;
 	
 	ArrayList<PVector> points = new ArrayList<PVector>();
-	float letterScale = 35f;
-	float animalSize = 0.37f;
-	float whiteSpaceWidth = 60f;
+	float letterScale = 40f;
+	float animalSize = 0.20f;
+	float whiteSpaceWidth = 20f;
 	float whiteSpaceHeight = 20f;
-	float leftBorder = 20f;
+	float leftBorder = 60f;
 	float topBorder = 50f;
+	int smallStepSize = 2;
+	int bigStepSize = 6;
 	ArrayList<AcAnimal> animals = new ArrayList<AcAnimal>();
 	ArrayList<AcAnimal> newanimals = new ArrayList<AcAnimal>();
 	ArrayList<AcAnimal> movingAnimals = new ArrayList<AcAnimal>();
@@ -49,6 +50,8 @@ public class Run extends PApplet {
 	PImage bg1;
 	PImage bg2;
 	PImage bg3;
+	PImage bgT;
+	
 	
 	HashMap<String, Boolean[][]> mAlphabet = new HashMap<String, Boolean[][]>();
 
@@ -59,6 +62,8 @@ public class Run extends PApplet {
 
 	private boolean drawFinish = false;
 	private boolean waiting = false;
+	private boolean nextMessageSwitch = false;
+	private boolean firstWord = true;
 	
 	public void setup() {
 		size(1920,1200,OPENGL);
@@ -86,6 +91,7 @@ public class Run extends PApplet {
 		 bg1 = loadImage("data/hintergrund_1.png");
 		 bg2 = loadImage("data/hintergrund_2.png");
 		 bg3 = loadImage("data/hintergrund_3.png");
+		 bgT = loadImage("data/verlauf.png");
 		 
 		 noCursor();
 		 fs = new SoftFullScreen(this); 
@@ -93,8 +99,8 @@ public class Run extends PApplet {
 	}
 
 	public void draw() {
-		colorMode(HSB, 1000, 100, 100);
-		if(bgColor.x<1000){
+		colorMode(HSB, 10000, 100, 100);
+		if(bgColor.x<10000){
 			bgColor.x++;
 		}else{
 			bgColor.x=0;
@@ -102,9 +108,13 @@ public class Run extends PApplet {
 		background(bgColor.x, bgColor.y, bgColor.z);
 		colorMode(RGB);
 		//background(0x1BBBE9);
-		//image(bg1,0,0);
+		image(bgT,0,0);
 		fill(0);
 	    stroke(0);
+	    if(nextMessageSwitch){
+	    	nextMessageSwitch = false;
+	    	nextMsg();
+	    }
 	    if(debug){
 	    for(int i=0; i<points.size(); i++){
 	        ellipse(points.get(i).x, points.get(i).y,5,5);  
@@ -114,17 +124,18 @@ public class Run extends PApplet {
 	    newanimals.clear();
 	    messageList.addAll(newMessageList);
 	    newMessageList.clear();
-	    for (Iterator<AcAnimal> i = animals.iterator(); i.hasNext();) {
-			AcAnimal ac =  i.next();
-			ac.update();
-		}
 	    if(movingAnimals.isEmpty() && drawFinish==false && !waiting){
 	    	drawFinish = true;
 	    }
+	    
 	    if(drawFinish && !waiting){
 	    	waiting=true;
 	    	nextTimer.schedule(new NextMsg(), 1000);
 	    }
+	    for (Iterator<AcAnimal> i = animals.iterator(); i.hasNext();) {
+			AcAnimal ac =  i.next();
+			ac.update();
+		}
 	}
 	
 	private void createMessage(String s){
@@ -166,13 +177,21 @@ public class Run extends PApplet {
 	
 	private void startDraw(){
 		drawFinish = false;
+		int stepSize;
+		if(firstWord){
+			stepSize = bigStepSize;
+			Collections.shuffle(animals);
+		}else{
+			stepSize = smallStepSize;
+		}
 		for (int i = 0; i < points.size(); i++) {
-			if(i<animals.size()-1){
-				animals.get(i).setTarget(points.get(i));
+			if(i<animals.size()){
+				animals.get(i).setTarget(points.get(i), stepSize);
 			}else{
 				break;
 			}
 		}
+		firstWord = false;
 //		for (Iterator<AcAnimal> iterator = animals.iterator(); iterator.hasNext();) {
 //			AcAnimal a = iterator.next();
 //			if(!a.isMoving()){
@@ -186,9 +205,9 @@ public class Run extends PApplet {
 			AcAnimal a = animals.get(i);
 			if(!a.isMoving()){
 				if(i<=(int)anSize/2){
-					a.setTarget(new PVector(-100,random(200)));
+					a.setTarget(new PVector(-100,random(height/2)), bigStepSize);
 				}else{
-					a.setTarget(new PVector(width+100,random(200)));
+					a.setTarget(new PVector(width+100,random(height/2)), bigStepSize);
 				}
 			}
 		}
@@ -245,6 +264,9 @@ public class Run extends PApplet {
 	}
 	
 	
+	public void nextMessageTrue(){
+		nextMessageSwitch = true;
+	}
 	public void nextMsg(){
 		
 		waiting=false;
@@ -263,12 +285,13 @@ public class Run extends PApplet {
 				}else{
 					msgPos=0;
 				}
+				firstWord = true;
 				createMessage(messageList.get(msgPos));
 			}else{
-				Collections.shuffle(animals);
+				
 				for (Iterator<AcAnimal> iterator = animals.iterator(); iterator.hasNext();) {
 					AcAnimal a = iterator.next();
-					a.setTarget(new PVector(random(width), height));
+					a.setTarget(new PVector(random(width), height-random(100)), bigStepSize);
 				}
 				gotoText=true;
 		}
@@ -346,6 +369,7 @@ public class Run extends PApplet {
 		mAlphabet.put("Ÿ", new Boolean[][]{ { true, false, true, true, true},{false, false, false, false, true}, { true, false, true, true, true}});
 		mAlphabet.put("š", new Boolean[][]{{ true, false, true, true, true},{false, false, true, false, true}, { true, false, true, true, true}});
 		mAlphabet.put("/", new Boolean[][]{{ false, false, false, false, true}, {false, false, false, true, false}, {false, false, true, false, false},	{false, true, false, false, false}, {true, false, false, false, false}});
+		mAlphabet.put(":", new Boolean[][]{{ false, false, true, false, true} });
 	}
 	
 	
@@ -359,6 +383,7 @@ public class Run extends PApplet {
 	public void oscEvent(OscMessage theOscMessage) {
 		  
 		  if(theOscMessage.checkAddrPattern("/gruss")==true) {
+			  println("new msg:"+theOscMessage.get(0));
 		    /* check if the typetag is the right one. */
 			  newMessageList.add(theOscMessage.get(0).stringValue());
 //			  try{
@@ -372,6 +397,7 @@ public class Run extends PApplet {
 			  //msgTxt.close();
 		      return;
 		    }else if(theOscMessage.checkAddrPattern("/animal")==true){
+		    	println("new animal");
 		    	 int t1 = Integer.parseInt(theOscMessage.get(0).stringValue());
 		    	 float x1 = Float.valueOf(theOscMessage.get(1).stringValue()).floatValue();
 		    	 float y1 = Float.valueOf(theOscMessage.get(2).stringValue()).floatValue();
@@ -386,8 +412,12 @@ public class Run extends PApplet {
 		    	int aT2 = Integer.parseInt(theOscMessage.get(11).stringValue());
 		    	float a2x =  Float.valueOf(theOscMessage.get(12).stringValue()).floatValue();
 		    	float a2y = Float.valueOf(theOscMessage.get(13).stringValue()).floatValue();
-		    	 newanimals.add(new AcAnimal(this, t1, x1, y1, r1, t2, x2, y2, r2, aT1, a1x, a1y, aT2, a2x, a2y));
-		    	 saver.addAnimal(t1, x1, y1, r1, t2, x2, y2, r2, aT1, a1x, a1y, aT2, a2x, a2y);
+		    	x1=width/2;
+		    	y1=height-400;
+		    	AcAnimal a = new AcAnimal(this, t1, x1, y1, r1, t2, x2, y2, r2, aT1, a1x, a1y, aT2, a2x, a2y);
+		    	a.setTarget(new PVector(width/2,height-400), 0.1f);
+		    	newanimals.add(a);
+		    	saver.addAnimal(t1, x1, y1, r1, t2, x2, y2, r2, aT1, a1x, a1y, aT2, a2x, a2y);
 		      return;
 		    } 
 		  println("### received an osc message. with address pattern "+theOscMessage.addrPattern());
