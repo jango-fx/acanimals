@@ -62,6 +62,12 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/user/controlP5/controlP5.jar"/>
 	<classpathentry kind="lib" path="lib/user/oscP5/oscP5.jar"/>
+	<classpathentry kind="lib" path="lib/user/fullscreen/fullscreen.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="acAnimals/lib/user/fullscreen"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/user/Ani/Ani.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
