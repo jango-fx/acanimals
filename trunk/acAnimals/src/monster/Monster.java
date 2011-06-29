@@ -1,5 +1,6 @@
 package monster;
 
+import buffet.Core;
 import processing.core.*;
 
 public class Monster
@@ -30,6 +31,17 @@ public class Monster
 	public void update()
 	{
 		draw();
+		getCenter();
+	}
+	
+	public PVector getCenter(){
+		PVector c = new PVector();
+		c.set(subPos);
+		c.sub(pos);
+		c.mult(0.5f);
+		c.add(pos);
+		Core.p5.point(c.x,c.y);
+		return c;
 	}
 
 	protected void draw()
