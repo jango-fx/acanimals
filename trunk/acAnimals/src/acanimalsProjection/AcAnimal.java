@@ -75,8 +75,8 @@ public class AcAnimal extends Monster{
 //		bPos.x = pos.x;
 //		bPos.y = pos.y;
 		target = t;
-		posx = getCenter().x;//pos.x;
-		posy = getCenter().y;//pos.y;
+//		posx = getCenter().x;//pos.x;
+//		posy = getCenter().y;//pos.y;
 		xAni = new Ani(this, eSpeed, "posx", t.x, Ani.QUAD_IN_OUT, "onEnd:xFinished");
 		yAni = new Ani (this, eSpeed, "posy", t.y, Ani.QUAD_IN_OUT, "onEnd:yFinished");
 //		steps = stepSize;
