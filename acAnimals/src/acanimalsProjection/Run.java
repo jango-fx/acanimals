@@ -30,7 +30,7 @@ public class Run extends PApplet {
 	
 	ArrayList<PVector> points = new ArrayList<PVector>();
 	float letterScale = 40f;
-	float animalSize = 0.20f;
+	float animalSize = 0.50f;
 	float whiteSpaceWidth = 20f;
 	float whiteSpaceHeight = 20f;
 	float leftBorder = 60f;
@@ -414,6 +414,7 @@ public class Run extends PApplet {
 		    	float a2y = Float.valueOf(theOscMessage.get(13).stringValue()).floatValue();
 		    	x1=width/2;
 		    	y1=height-400;
+		    	println("auge1: "+aT1+" auge2: "+aT2);
 		    	AcAnimal a = new AcAnimal(this, t1, x1, y1, r1, t2, x2, y2, r2, aT1, a1x, a1y, aT2, a2x, a2y);
 		    	a.setTarget(new PVector(width/2,height-400), 0.1f);
 		    	newanimals.add(a);

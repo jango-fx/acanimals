@@ -1,10 +1,7 @@
 package monster;
 
-import javax.media.opengl.GL;
-
 import buffet.Core;
 import processing.core.*;
-import processing.opengl.PGraphicsOpenGL;
 
 public class Monster
 {
@@ -22,7 +19,7 @@ public class Monster
 	{
 		p = parent;
 		pos = new PVector(x1, y1);
-		subPos = new PVector(x2 * -71, y2 * -71);
+		subPos = new PVector(x2 * 71, y2 * 71);
 
 		main = new MonsterBody(p, t1, r1);
 		sub = new MonsterBody(p, t2, r2);
@@ -40,19 +37,10 @@ public class Monster
 	public PVector getCenter(){
 		PVector c = new PVector();
 		c.set(subPos);
+		c.sub(pos);
 		c.mult(0.5f);
 		c.add(pos);
-		
-		PGraphicsOpenGL pgl = (PGraphicsOpenGL) p.g;
-		GL gl = pgl.beginGL();
-		gl.glPushMatrix();
-		gl.glTranslatef(c.x, c.y, 0);
-		gl.glBegin(GL.GL_POINTS);
-		gl.glColor3f(1,0,0);
-		gl.glVertex2f(0, 0);
-		gl.glPopMatrix();
-		gl.glEnd();
-
+		Core.p5.point(c.x,c.y);
 		return c;
 	}
 
@@ -64,18 +52,12 @@ public class Monster
 		p.translate(pos.x, pos.y);
 		p.scale(f);
 		main.draw();
-	//	p.pushMatrix();
-		p.translate(subPos.x, subPos.y);		
-//		p.popMatrix();
+
+		p.translate(subPos.x, subPos.y);
 		sub.draw();
-		p.pushMatrix();
-		p.translate(leftEye.x, leftEye.y);
+
 		leftEye.draw();
-		p.popMatrix();
-		p.pushMatrix();
-		p.translate(rightEye.x, rightEye.y);
 		rightEye.draw();
-		p.popMatrix();
 
 		p.popMatrix();
 

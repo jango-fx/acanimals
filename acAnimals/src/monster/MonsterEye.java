@@ -50,7 +50,6 @@ public class MonsterEye
 		case 8:
 			drawEye_Normal();
 			break;	
-			
 		case 9:
 		case 10:
 			drawEye_Angry(-1);
