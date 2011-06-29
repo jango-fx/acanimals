@@ -64,12 +64,18 @@ public class Monster
 		p.translate(pos.x, pos.y);
 		p.scale(f);
 		main.draw();
-
-		p.translate(subPos.x, subPos.y);
+	//	p.pushMatrix();
+		p.translate(subPos.x, subPos.y);		
+//		p.popMatrix();
 		sub.draw();
-
+		p.pushMatrix();
+		p.translate(leftEye.x, leftEye.y);
 		leftEye.draw();
+		p.popMatrix();
+		p.pushMatrix();
+		p.translate(rightEye.x, rightEye.y);
 		rightEye.draw();
+		p.popMatrix();
 
 		p.popMatrix();
 
