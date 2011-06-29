@@ -37,7 +37,7 @@ public class MonsterRunner extends Monster
 		float a = 0.1f;
 		acc = new PVector(Core.p5.random(-a, a), Core.p5.random(-a, a));
 
-		PVector fric = new PVector(vel.x * -0.01f, vel.y * -0.01f);
+		PVector fric = new PVector(vel.x * -0.1f, vel.y * -0.1f);
 		acc.add(fric);
 		if(kinect != null)
 		checkKinect(kinect);
@@ -47,8 +47,8 @@ public class MonsterRunner extends Monster
 
 
 		checkBoundaries();
-		PApplet.constrain(vel.x, -0.05f, 0.05f);
-		PApplet.constrain(vel.y, -0.05f, 0.05f);
+		PApplet.constrain(vel.x, -0.5f, 0.05f);
+		PApplet.constrain(vel.y, -0.5f, 0.05f);
 		pos.add(vel);
 	}
 

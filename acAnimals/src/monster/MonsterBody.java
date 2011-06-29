@@ -27,13 +27,13 @@ public class MonsterBody
 
 		switch (type)
 		{
-		case 1:
+		case 0:
 			drawA();
 			break;
-		case 2:
+		case 1:
 			drawPlus();
 			break;
-		case 3:
+		case 2:
 			drawPlus2();
 			break;
 		default:

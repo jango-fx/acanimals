@@ -4,8 +4,6 @@ import processing.core.*;
 import processing.opengl.PGraphicsOpenGL;
 import javax.media.opengl.GL;
 
-import buffet.Core;
-
 import java.lang.Math;
 
 public class MonsterEye
@@ -36,30 +34,39 @@ public class MonsterEye
 
 		switch (type)
 		{
-		case 0:
-			drawEye_Normal();
-			break;
 		case 1:
-			drawEye_Rolling(1, 0);
-			break;
 		case 2:
-			drawEye_Rolling(-1, 0);
-			break;
-		case 3:
-			drawEye_Rolling(0, -1);
-			break;
-		case 4:
-			drawEye_Rolling(0, -1);
-			break;
-		case 5:
 			drawEye_Angry(1);
 			break;
+		case 3:
+		case 4:
+			drawEye_Rolling(1,0);
+			break;
+		case 5:
 		case 6:
-			drawEye_Angry(-1);
+			drawEye_Rolling(0,-1);
 			break;
 		case 7:
-			drawEye_Squeezed();
+		case 8:
+			drawEye_Normal();
+			break;	
+			
+		case 9:
+		case 10:
+			drawEye_Angry(-1);
 			break;
+		case 11:
+		case 12:
+			drawEye_Rolling(-1,0);
+			break;
+		case 13:
+		case 14:
+			drawEye_Rolling(0,1);
+			break;
+		case 15:
+		case 16:
+			drawEye_Squeezed();
+			break;	
 		default:
 			break;
 		}

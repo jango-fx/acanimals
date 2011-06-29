@@ -34,13 +34,10 @@ public class Run extends PApplet
 
 		loadAnimals();
 
-		// for (int i = 0; i < 50; i++)
-		// {
-		// mo.add(new MonsterRunner(mo, 0, random(50, width - 50), random(50,
-		// height - 50), (int) random(3) * 90, 0, (71/71), (random(-14, 14)/71),
-		// (int) random(3) * 90, (int) random(8), new PVector(1, 1, 0), (int)
-		// random(8), new PVector(1, 0.5f, 0)));
-		// }
+		for (int i = 0; i < 50; i++)
+		{
+			mo.add(new MonsterRunner(mo, 0, random(50, width - 50), random(50, height - 50), (int) random(3) * 90, 0, (71 / 71), (random(-14, 14) / 71), (int) random(3) * 90, (int) random(8), new PVector(1, 1, 0), (int) random(8), new PVector(1, 0.5f, 0)));
+		}
 		Monster.f = 0.3f;
 	}
 
@@ -72,8 +69,8 @@ public class Run extends PApplet
 			String[] singleAnimal = animalData[i].split("\t");
 
 			int t1 = Integer.parseInt(singleAnimal[0]);
-			float x1 = Float.valueOf(singleAnimal[1]);
-			float y1 = Float.valueOf(singleAnimal[2]);
+			float x1 = random(50, width - 50); //Float.valueOf(singleAnimal[1]);
+			float y1 = random(50, height - 50); //Float.valueOf(singleAnimal[2]);
 			int r1 = Integer.parseInt(singleAnimal[3]);
 
 			int t2 = Integer.parseInt(singleAnimal[4]);
