@@ -9,7 +9,7 @@ public class Monster
 
 	MonsterBody main, sub;
 	protected PVector pos;
-	PVector subPos;
+	protected PVector subPos;
 
 	MonsterEye leftEye, rightEye;
 

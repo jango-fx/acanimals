@@ -29,9 +29,9 @@ public class Run extends PApplet {
 	Boolean debug = false;
 	
 	ArrayList<PVector> points = new ArrayList<PVector>();
-	float letterScale = 40f;
-	float animalSize = 0.50f;
-	float whiteSpaceWidth = 20f;
+	float letterScale = 38f;
+	float animalSize = 0.38f;
+	float whiteSpaceWidth = 22f;
 	float whiteSpaceHeight = 20f;
 	float leftBorder = 60f;
 	float topBorder = 50f;
@@ -86,7 +86,7 @@ public class Run extends PApplet {
 		 
 		 createMessage(messageList.get(0));
 		 
-		 Monster.f=animalSize;
+		 
 		 
 		 bg1 = loadImage("data/hintergrund_1.png");
 		 bg2 = loadImage("data/hintergrund_2.png");
@@ -99,6 +99,7 @@ public class Run extends PApplet {
 	}
 
 	public void draw() {
+		Monster.f=animalSize;
 		colorMode(HSB, 10000, 100, 100);
 		if(bgColor.x<10000){
 			bgColor.x++;
@@ -142,7 +143,11 @@ public class Run extends PApplet {
 //		println("message create");
 		displayMsg = msgToWords(s);
 //		createPoints(s);
-		createCurrentWord(displayMsg.get(0));
+		String cWord = displayMsg.get(0);
+		if(cWord.length()>11){
+			cWord = cWord.substring(0, 10);
+		}
+		createCurrentWord(cWord);
 		createWordPoints();
 		startDraw();
 	}
@@ -427,5 +432,20 @@ public class Run extends PApplet {
 	public static void main(String _args[]) {
 		  PApplet.main(new String[] { "--present", Run.class.getName() });
 	}
+	
+	public void keyPressed() {
+		  if (key == CODED) {
+		    if (keyCode == UP) {
+		      animalSize += 0.01f;
+		    } else if (keyCode == DOWN) {
+		    	animalSize -= 0.01f;
+		    } else if(keyCode == RIGHT) {
+		    	whiteSpaceWidth++;
+		    } else if(keyCode == LEFT) {
+		    	whiteSpaceWidth--;
+		    }
+		  }
+		  println("animalSize: "+animalSize+" whiteSpaceWidth: "+whiteSpaceWidth);
+		}
 	
 }
