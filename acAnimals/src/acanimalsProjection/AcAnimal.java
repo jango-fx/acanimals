@@ -68,6 +68,7 @@ public class AcAnimal extends Monster{
 //		}
 		pos.x = posx;
 		pos.y = posy;
+		pos.add(c);
 		super.update();
 	}
 	
