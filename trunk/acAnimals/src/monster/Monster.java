@@ -6,10 +6,13 @@ import processing.core.*;
 public class Monster
 {
 	PApplet p;
-
+	
+	private float eyeScale = 1.5f;
+	
 	MonsterBody main, sub;
 	protected PVector pos;
 	protected PVector subPos;
+	protected PVector c = new PVector();
 
 	MonsterEye leftEye, rightEye;
 
@@ -26,22 +29,26 @@ public class Monster
 
 		leftEye = new MonsterEye(p, aT1, a1);
 		rightEye = new MonsterEye(p, aT2, a2);
+		c.set(subPos);
+		c.mult(f);
+		c.mult(-.5f);
 	}
 
 	public void update()
 	{
 		draw();
-//		getCenter();
 	}
 	
-	public PVector getCenter(){
-		PVector c = new PVector();
+	public void getCenter(){
+		
 		c.set(subPos);
-		c.sub(pos);
 		c.mult(0.5f);
+		//c.sub(pos);
+		
 		c.add(pos);
-		Core.p5.point(c.x,c.y);
-		return c;
+		//p.point(c.x,c.y);
+		pos = c;
+	//	return c;
 	}
 
 	protected void draw()
@@ -57,11 +64,16 @@ public class Monster
 		sub.draw();
 		p.translate(-subPos.x, -subPos.y);
 		p.translate(leftEye.x+78*f, leftEye.y+98*f);
+		p.pushMatrix();
+		p.scale(eyeScale);
 		leftEye.draw();
+		p.popMatrix();
 		p.translate(-(leftEye.x+78*f), -(leftEye.y+98*f));
 		p.translate(rightEye.x+78*f, rightEye.y+98*f);
+		p.pushMatrix();
+		p.scale(eyeScale);
 		rightEye.draw();
-
+		p.popMatrix();
 		p.popMatrix();
 
 	}
