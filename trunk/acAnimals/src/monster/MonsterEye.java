@@ -36,7 +36,7 @@ public class MonsterEye
 		{
 		case 1:
 		case 2:
-			drawEye_Angry(1);
+			drawEye_Angry(-1);
 			break;
 		case 3:
 		case 4:
@@ -52,7 +52,7 @@ public class MonsterEye
 			break;	
 		case 9:
 		case 10:
-			drawEye_Angry(-1);
+			drawEye_Angry(1);
 			break;
 		case 11:
 		case 12:
