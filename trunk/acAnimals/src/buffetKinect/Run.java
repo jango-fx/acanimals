@@ -10,19 +10,30 @@ import acanimalsProjection.AcAnimal;
 import animalosc.AnimalOsc;
 
 import processing.core.PApplet;
+import processing.core.PImage;
 import processing.core.PVector;
+
+import fullscreen.SoftFullScreen;
 
 public class Run extends PApplet
 {
+	SoftFullScreen fs;
+
 	ArrayList<MonsterRunner> mo = new ArrayList();
 	ArrayList<MonsterRunner> mo_tmp = new ArrayList();
 	AnimalOsc osc;
 
-	KinectFX kinect;
+//	KinectFX kinect;
 	Save saver = new Save(this, "buff");
+	
+	PImage verlauf;
 
 	public void setup()
 	{
+		 noCursor();
+		 fs = new SoftFullScreen(this); 
+		 fs.enter();
+		 
 		Core.p5 = this;
 		osc = new AnimalOsc(this, 12000);
 		saver.initSaver();
@@ -30,22 +41,20 @@ public class Run extends PApplet
 		size(1400, 1050, OPENGL);
 		scale(0.1f);
 
-		kinect = new KinectFX(this);
+//		kinect = new KinectFX(this);
 
 		loadAnimals();
 
-//		for (int i = 0; i < 50; i++)
-//		{
-//			mo.add(new MonsterRunner(mo, 0, random(50, width - 50), random(50, height - 50), (int) random(3) * 90, 0, (71 / 71), (random(-14, 14) / 71), (int) random(3) * 90, (int) random(8), new PVector(1, 1, 0), (int) random(8), new PVector(1, 0.5f, 0)));
-//		}
 		Monster.f = 0.3f;
+		
+		verlauf = loadImage("verlauf_buffet.png");
 	}
 
 	public void draw()
 	{
 		background(255);
 
-		kinect.update();
+//		kinect.update();
 
 		mo.addAll(mo_tmp);
 		mo_tmp.clear();
@@ -54,10 +63,11 @@ public class Run extends PApplet
 		while (iterator.hasNext())
 		{
 			MonsterRunner monster = iterator.next();
-			// monster.update(null);
-			monster.update(kinect);
+			 monster.update(null);
+//			monster.update(kinect);
 		}
-
+		
+		image(verlauf, -1,-1,1401,1051);
 	}
 
 	private void loadAnimals()
