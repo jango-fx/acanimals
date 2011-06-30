@@ -67,7 +67,7 @@ public class Run extends PApplet
 			// monster.update(kinect);
 		}
 
-//		tint(255,50);
+//		tint(255,150);
 		image(verlauf, -1, -1, 1401, 1051);
 	}
 
