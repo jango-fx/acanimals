@@ -129,7 +129,7 @@ public class Run extends PApplet
 
 			println("Add Monster...");
 			MonsterRunner newMo = new MonsterRunner(mo, t1, x1, y1, r1, t2, x2, y2, r2, a1t, new PVector(a1x, a1y), a2t, new PVector(a2x, a2y));
-			newMo.vel.add(new PVector(30, 30, 0));
+			newMo.vel.add(new PVector(40, 40, 0));
 			mo_tmp.add(newMo);
 
 			saver.addAnimal(t1, x1, y1, r1, t2, x2, y2, r2, a1t, a1x, a1y, a2t, a2x, a2y);
