@@ -34,7 +34,7 @@ public class MonsterRunner extends Monster
 	
 	void move(KinectFX kinect)
 	{
-		float a = 0.1f;
+		float a = 0.5f;
 		acc = new PVector(Core.p5.random(-a, a), Core.p5.random(-a, a));
 
 		PVector fric = new PVector(vel.x * -0.1f, vel.y * -0.1f);
@@ -103,7 +103,7 @@ public class MonsterRunner extends Monster
 				PVector tmpAcc = new PVector(n.pos.x, n.pos.y);
 				tmpAcc.sub(pos);
 				tmpAcc.normalize();
-				tmpAcc.mult((float) (1 / Math.pow(PApplet.dist(pos.x, pos.y, n.pos.x, n.pos.y), 2))*2);
+				tmpAcc.mult((float) (1 / Math.pow(PApplet.dist(pos.x, pos.y, n.pos.x, n.pos.y), 2))*3);
 				acc.add(tmpAcc);
 				if (PApplet.dist(pos.x, pos.y, n.pos.x, n.pos.y) < Math.sqrt(Math.pow(98,2)+Math.pow(71, 2))*0.5 * f)
 				{
