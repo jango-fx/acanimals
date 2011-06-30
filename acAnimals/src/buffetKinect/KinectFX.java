@@ -17,11 +17,11 @@ public class KinectFX
 	
 
 	float depthMin = 800.52f;
-	float depthMax = 824.07f;
+	float depthMax = 842.0f;
 
-	float xOffset = 0.00f;
-	float yOffset = 0.00f;
-	float factor = 2.50f;
+	float xOffset = 15.35f;
+	float yOffset = 339.28f;
+	float factor = 2.10f;
 
 	KinectFX(PApplet a)
 	{
@@ -78,9 +78,9 @@ public class KinectFX
 
 				// Core.p5.translate(xOffset + (v.x * factor), yOffset + (v.y *
 				// factor), factor - v.z * factor);
-				Core.p5.translate(xOffset + (x * factor), yOffset + (y * factor), 0);
+				Core.p5.translate(xOffset + ((640-x) * factor), yOffset + (480-y * factor), 0);
 
-				Core.p5.stroke(0, 0, 255, 100);
+				Core.p5.stroke(PApplet.map(rawDepth, 0, 2049, 0, 255));
 				if (rawDepth > depthMin && rawDepth < depthMax)
 				{
 					teller.add(new PVector(xOffset + ((640-x) * factor), yOffset + ((480-y) * factor), 0));

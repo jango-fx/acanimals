@@ -27,17 +27,17 @@ public class Run extends PApplet
 		osc = new AnimalOsc(this, 12000);
 		saver.initSaver();
 
-		size(1440, 900, OPENGL);
+		size(1400, 1050, OPENGL);
 		scale(0.1f);
 
 		kinect = new KinectFX(this);
 
 		loadAnimals();
 
-		for (int i = 0; i < 50; i++)
-		{
-			mo.add(new MonsterRunner(mo, 0, random(50, width - 50), random(50, height - 50), (int) random(3) * 90, 0, (71 / 71), (random(-14, 14) / 71), (int) random(3) * 90, (int) random(8), new PVector(1, 1, 0), (int) random(8), new PVector(1, 0.5f, 0)));
-		}
+//		for (int i = 0; i < 50; i++)
+//		{
+//			mo.add(new MonsterRunner(mo, 0, random(50, width - 50), random(50, height - 50), (int) random(3) * 90, 0, (71 / 71), (random(-14, 14) / 71), (int) random(3) * 90, (int) random(8), new PVector(1, 1, 0), (int) random(8), new PVector(1, 0.5f, 0)));
+//		}
 		Monster.f = 0.3f;
 	}
 
