@@ -23,17 +23,17 @@ public class Run extends PApplet
 	ArrayList<MonsterRunner> mo_tmp = new ArrayList();
 	AnimalOsc osc;
 
-//	KinectFX kinect;
+	// KinectFX kinect;
 	Save saver = new Save(this, "buff");
-	
+
 	PImage verlauf;
 
 	public void setup()
 	{
-		 noCursor();
-		 fs = new SoftFullScreen(this); 
-		 fs.enter();
-		 
+		noCursor();
+		fs = new SoftFullScreen(this);
+		fs.enter();
+
 		Core.p5 = this;
 		osc = new AnimalOsc(this, 12000);
 		saver.initSaver();
@@ -41,12 +41,12 @@ public class Run extends PApplet
 		size(1400, 1050, OPENGL);
 		scale(0.1f);
 
-//		kinect = new KinectFX(this);
+		// kinect = new KinectFX(this);
 
 		loadAnimals();
 
 		Monster.f = 0.3f;
-		
+
 		verlauf = loadImage("verlauf_buffet.png");
 	}
 
@@ -54,7 +54,7 @@ public class Run extends PApplet
 	{
 		background(255);
 
-//		kinect.update();
+		// kinect.update();
 
 		mo.addAll(mo_tmp);
 		mo_tmp.clear();
@@ -63,14 +63,15 @@ public class Run extends PApplet
 		while (iterator.hasNext())
 		{
 			MonsterRunner monster = iterator.next();
-			 monster.update(null);
-//			monster.update(kinect);
+			monster.update(null);
+			// monster.update(kinect);
 		}
-		
-		image(verlauf, -1,-1,1401,1051);
+
+//		tint(255,50);
+		image(verlauf, -1, -1, 1401, 1051);
 	}
 
-	private void loadAnimals()
+		private void loadAnimals()
 	{
 		String[] animalData = saver.getAnimalData();
 		println(animalData);
@@ -110,6 +111,7 @@ public class Run extends PApplet
 			int t1 = Integer.parseInt(theOscMessage.get(0).stringValue());
 			float x1 = Float.valueOf(theOscMessage.get(1).stringValue()).floatValue();
 			float y1 = Float.valueOf(theOscMessage.get(2).stringValue()).floatValue();
+			y1=241;
 			int r1 = Integer.parseInt(theOscMessage.get(3).stringValue());
 
 			int t2 = Integer.parseInt(theOscMessage.get(4).stringValue());
@@ -127,7 +129,7 @@ public class Run extends PApplet
 
 			println("Add Monster...");
 			MonsterRunner newMo = new MonsterRunner(mo, t1, x1, y1, r1, t2, x2, y2, r2, a1t, new PVector(a1x, a1y), a2t, new PVector(a2x, a2y));
-			newMo.vel.add(new PVector(1, 1, 0));
+			newMo.vel.add(new PVector(30, 30, 0));
 			mo_tmp.add(newMo);
 
 			saver.addAnimal(t1, x1, y1, r1, t2, x2, y2, r2, a1t, a1x, a1y, a2t, a2x, a2y);
@@ -136,7 +138,7 @@ public class Run extends PApplet
 			return;
 		}
 	}
-
+	
 	public static void main(String _args[])
 	{
 		PApplet.main(new String[] { "--present", Run.class.getName() });
