@@ -55,8 +55,11 @@ public class Monster
 
 		p.translate(subPos.x, subPos.y);
 		sub.draw();
-
+		p.translate(-subPos.x, -subPos.y);
+		p.translate(leftEye.x+78*f, leftEye.y+98*f);
 		leftEye.draw();
+		p.translate(-(leftEye.x+78*f), -(leftEye.y+98*f));
+		p.translate(rightEye.x+78*f, rightEye.y+98*f);
 		rightEye.draw();
 
 		p.popMatrix();
