@@ -83,7 +83,7 @@ public class MonsterRunner extends Monster
 			else
 				pos.x = Core.p5.width - 1;
 		}
-		if (pos.y - (0) < 0 || pos.y + (0) > Core.p5.height)
+		if (pos.y - (0) < 241 || pos.y + (0) > Core.p5.height)
 		{
 			vel.y *= -0.9;
 			if (pos.y < 0)
