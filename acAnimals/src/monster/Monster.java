@@ -1,6 +1,5 @@
 package monster;
 
-import buffet.Core;
 import processing.core.*;
 
 public class Monster
