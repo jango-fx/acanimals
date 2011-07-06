@@ -47,9 +47,6 @@ public class Run extends PApplet {
 	Boolean gotoText = false;
 	int msgPos = 0;
 	PVector bgColor = new PVector(0, 50, 90);
-	PImage bg1;
-	PImage bg2;
-	PImage bg3;
 	PImage bgT;
 	
 	
@@ -87,10 +84,7 @@ public class Run extends PApplet {
 		 createMessage(messageList.get(0));
 		 
 		 
-		 
-		 bg1 = loadImage("data/hintergrund_1.png");
-		 bg2 = loadImage("data/hintergrund_2.png");
-		 bg3 = loadImage("data/hintergrund_3.png");
+		
 		 bgT = loadImage("data/verlauf.png");
 		 
 		 noCursor();
