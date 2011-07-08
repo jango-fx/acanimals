@@ -23,7 +23,7 @@ public class Run extends PApplet
 	ArrayList<MonsterRunner> mo_tmp = new ArrayList();
 	AnimalOsc osc;
 
-	// KinectFX kinect;
+	 KinectFX kinect;
 	Save saver = new Save(this, "buff");
 
 	PImage verlauf;
@@ -41,7 +41,7 @@ public class Run extends PApplet
 		size(1400, 1050, OPENGL);
 		scale(0.1f);
 
-		// kinect = new KinectFX(this);
+		 kinect = new KinectFX(this);
 
 		loadAnimals();
 
@@ -54,7 +54,7 @@ public class Run extends PApplet
 	{
 		background(255);
 
-		// kinect.update();
+		 kinect.update();
 
 		mo.addAll(mo_tmp);
 		mo_tmp.clear();
@@ -63,8 +63,8 @@ public class Run extends PApplet
 		while (iterator.hasNext())
 		{
 			MonsterRunner monster = iterator.next();
-			monster.update(null);
-			// monster.update(kinect);
+//			monster.update(null);
+			 monster.update(kinect);
 		}
 
 //		tint(255,150);

@@ -74,11 +74,11 @@ public class KinectFX
 
 				// PVector v = depthToWorld(640 - x, y, rawDepth);
 
-				Core.p5.pushMatrix();
+//				Core.p5.pushMatrix();
 
 				// Core.p5.translate(xOffset + (v.x * factor), yOffset + (v.y *
 				// factor), factor - v.z * factor);
-				Core.p5.translate(xOffset + ((640-x) * factor), yOffset + (480-y * factor), 0);
+//				Core.p5.translate(xOffset + ((640-x) * factor), yOffset + (480-y * factor), 0);
 
 				Core.p5.stroke(PApplet.map(rawDepth, 0, 2049, 0, 255));
 				if (rawDepth > depthMin && rawDepth < depthMax)
@@ -86,13 +86,13 @@ public class KinectFX
 					teller.add(new PVector(xOffset + ((640-x) * factor), yOffset + ((480-y) * factor), 0));
 				}
 
-				Core.p5.strokeWeight(3);
-				Core.p5.point(0, 0);
-				Core.p5.popMatrix();
+//				Core.p5.strokeWeight(3);
+//				Core.p5.point(0, 0);
+//				Core.p5.popMatrix();
 			}
 		}
 		Core.p5.popMatrix();
-		draw();
+//		draw();
 	}
 
 	// These functions come from:
